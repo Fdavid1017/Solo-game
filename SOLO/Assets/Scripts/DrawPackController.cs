@@ -11,6 +11,7 @@ public class DrawPackController : MonoBehaviour
     public List<GameObject> redCardsPrefabs;
     public List<GameObject> greenCardsPrefabs;
     public List<GameObject> yellowCardsPrefabs;
+    public List<GameObject> blackCardsPrefabs;
 
     List<Card> cards = new List<Card>();
 
@@ -75,6 +76,223 @@ public class DrawPackController : MonoBehaviour
 
     public void DrawCard(HandController handController)
     {
-        //handController.AddCardToHand()
+        Card topCard = cards[cards.Count - 1];
+        cards.RemoveAt(cards.Count - 1);
+        GameObject card;
+        switch (topCard.color)
+        {
+            case CardColor.Red:
+                switch (topCard.type)
+                {
+                    case CardType.One:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.One));
+                        break;
+                    case CardType.Two:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Two));
+                        break;
+                    case CardType.Three:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Three));
+                        break;
+                    case CardType.Four:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Four));
+                        break;
+                    case CardType.Five:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Five));
+                        break;
+                    case CardType.Six:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Six));
+                        break;
+                    case CardType.Seven:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Seven));
+                        break;
+                    case CardType.Eight:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Eight));
+                        break;
+                    case CardType.Nine:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Nine));
+                        break;
+                    case CardType.Skipp:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Skipp));
+                        break;
+                    case CardType.Switch_direction:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Switch_direction));
+                        break;
+                    case CardType.Change_cards:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Change_cards));
+                        break;
+                    case CardType.Draw_2:
+                        card = Instantiate(redCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Draw_2));
+                        break;
+                    default:
+                        card = new GameObject();
+                        break;
+                }
+                break;
+            case CardColor.Green:
+                switch (topCard.type)
+                {
+                    case CardType.One:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.One));
+                        break;
+                    case CardType.Two:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Two));
+                        break;
+                    case CardType.Three:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Three));
+                        break;
+                    case CardType.Four:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Four));
+                        break;
+                    case CardType.Five:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Five));
+                        break;
+                    case CardType.Six:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Six));
+                        break;
+                    case CardType.Seven:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Seven));
+                        break;
+                    case CardType.Eight:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Eight));
+                        break;
+                    case CardType.Nine:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Nine));
+                        break;
+                    case CardType.Skipp:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Skipp));
+                        break;
+                    case CardType.Switch_direction:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Switch_direction));
+                        break;
+                    case CardType.Change_cards:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Change_cards));
+                        break;
+                    case CardType.Draw_2:
+                        card = Instantiate(greenCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Draw_2));
+                        break;
+                    default:
+                        card = new GameObject();
+                        break;
+                }
+                break;
+            case CardColor.Yellow:
+                switch (topCard.type)
+                {
+                    case CardType.One:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.One));
+                        break;
+                    case CardType.Two:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Two));
+                        break;
+                    case CardType.Three:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Three));
+                        break;
+                    case CardType.Four:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Four));
+                        break;
+                    case CardType.Five:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Five));
+                        break;
+                    case CardType.Six:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Six));
+                        break;
+                    case CardType.Seven:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Seven));
+                        break;
+                    case CardType.Eight:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Eight));
+                        break;
+                    case CardType.Nine:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Nine));
+                        break;
+                    case CardType.Skipp:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Skipp));
+                        break;
+                    case CardType.Switch_direction:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Switch_direction));
+                        break;
+                    case CardType.Change_cards:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Change_cards));
+                        break;
+                    case CardType.Draw_2:
+                        card = Instantiate(yellowCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Draw_2));
+                        break;
+                    default:
+                        card = new GameObject();
+                        break;
+                }
+                break;
+            case CardColor.Blue:
+                switch (topCard.type)
+                {
+                    case CardType.One:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.One));
+                        break;
+                    case CardType.Two:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Two));
+                        break;
+                    case CardType.Three:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Three));
+                        break;
+                    case CardType.Four:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Four));
+                        break;
+                    case CardType.Five:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Five));
+                        break;
+                    case CardType.Six:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Six));
+                        break;
+                    case CardType.Seven:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Seven));
+                        break;
+                    case CardType.Eight:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Eight));
+                        break;
+                    case CardType.Nine:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Nine));
+                        break;
+                    case CardType.Skipp:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Skipp));
+                        break;
+                    case CardType.Switch_direction:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Switch_direction));
+                        break;
+                    case CardType.Change_cards:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Change_cards));
+                        break;
+                    case CardType.Draw_2:
+                        card = Instantiate(blueCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Draw_2));
+                        break;
+                    default:
+                        card = new GameObject();
+                        break;
+                }
+                break;
+            case CardColor.Black:
+                switch (topCard.type)
+                {
+                    case CardType.Switch_cards_all:
+                        card = Instantiate(blackCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Switch_cards_all));
+                        break;
+                    case CardType.Change_color:
+                        card = Instantiate(blackCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Change_color));
+                        break;
+                    case CardType.Draw_4:
+                        card = Instantiate(blackCardsPrefabs.Find(x => x.GetComponent<Card>().type == CardType.Draw_4));
+                        break;
+                    default:
+                        card = new GameObject();
+                        break;
+                }
+                break;
+            default:
+                card = new GameObject();
+                break;
+        }
+
+        card.transform.position = transform.position;
+        card.transform.parent = handController.transform;
+        handController.AddCardToHand(card);
     }
 }

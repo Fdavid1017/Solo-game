@@ -204,6 +204,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &673846582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 673846584}
+  - component: {fileID: 673846583}
+  m_Layer: 0
+  m_Name: EnemyHand_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &673846583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673846582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9acb549b9524747a4c3454fb486538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handSizeBoundaries: {x: -3, y: 3}
+  cardToTest: {fileID: 8455384687398900420, guid: 39f57e2179cb6744d9961657444cd2ad,
+    type: 3}
+--- !u!4 &673846584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673846582}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 9, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1065975866
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,8 +421,57 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!1 &1454229487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1454229489}
+  - component: {fileID: 1454229488}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1454229488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454229487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f05e05e2a40acc4a86552f2a87ba16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players:
+  - {fileID: 1065975866}
+  - {fileID: 673846582}
+  - {fileID: 1430042996}
+  - {fileID: 1907210435}
+  drawPackController: {fileID: 6085835006439851334}
+--- !u!4 &1454229489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454229487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907210435
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +516,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1980867527
 GameObject:
@@ -738,10 +833,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHand: {fileID: 1065975868}
-  blueCardsPrefabs: []
-  redCardsPrefabs: []
-  greenCardsPrefabs: []
-  yellowCardsPrefabs: []
+  blueCardsPrefabs:
+  - {fileID: 5534209718602137476, guid: 2e30f10cefbce9c4e8caf7e3f5a4b723, type: 3}
+  - {fileID: 1773913103894030458, guid: 8856a55153d4c334cab230a50e3c4290, type: 3}
+  - {fileID: 2604521381267275103, guid: 7589f36c38c030542984a229529d17c0, type: 3}
+  - {fileID: 585264634769677769, guid: 1111b0e965975804d816959f8e90ca11, type: 3}
+  - {fileID: 4011307026532495929, guid: 02fd1f53f33f9c941a9cdfad34081e39, type: 3}
+  - {fileID: 5319030272796187019, guid: 9042762e2790a804dbaf9b0822700c3e, type: 3}
+  - {fileID: 3966530587758408996, guid: b3824608adaeb124db702535d1b753de, type: 3}
+  - {fileID: 5891793743273625797, guid: db676fdb779903a4eafe3f92b70a0547, type: 3}
+  - {fileID: 5552115609997965421, guid: 94733a480369ad6449aaedace1f00d4c, type: 3}
+  - {fileID: 5278444609790613635, guid: f282aa83550028f4eb341091d7ec3daa, type: 3}
+  - {fileID: 3440291399684488248, guid: 11578dab9679c9c49887e13929ca0686, type: 3}
+  - {fileID: 2091725431667047289, guid: 8a9f966787533da40bb49c14822ef8a0, type: 3}
+  - {fileID: 1914616612011733122, guid: 3eb53e25833111c45b34753367bec63f, type: 3}
+  redCardsPrefabs:
+  - {fileID: 2478316286553866388, guid: 6a54b3b432625174792c629b59087892, type: 3}
+  - {fileID: 950605996857638079, guid: b4a4c7cb453529f44a2b1cf881acace7, type: 3}
+  - {fileID: 7586519917323181735, guid: 99022889df7953246afe5d0d7071526b, type: 3}
+  - {fileID: 4671186828843831283, guid: 4f209c729a217d24790fd122f039f609, type: 3}
+  - {fileID: 3914601873390396811, guid: 0e5f2ff2a90ee1b49afdc2a3fe5451bd, type: 3}
+  - {fileID: 6745026228684275221, guid: dc490b73d6165f54b802a97571aa620b, type: 3}
+  - {fileID: 6983775422811157449, guid: 2c3b3ab06d77ec04a987b34cb70e6b1a, type: 3}
+  - {fileID: 5241520591727277727, guid: 0f30c2bcbcfd1804485b3e90c36a02d5, type: 3}
+  - {fileID: 2432878043874214327, guid: a5cb2b92d2c15aa4495d27e237c0abd9, type: 3}
+  - {fileID: 4640126972603408791, guid: 84f80f4d6c44ff44bbf19a125a2719d9, type: 3}
+  - {fileID: 6390274646688052693, guid: e8ac319852e89bb47a18ef836577e6be, type: 3}
+  - {fileID: 2848117132827916526, guid: 8e4ce46caf65b0a4aa15ede64d8a1ffe, type: 3}
+  - {fileID: 2541854663307078344, guid: 7c4a493ac9aaf8e46badcb44fba3e211, type: 3}
+  greenCardsPrefabs:
+  - {fileID: 5496170795853368094, guid: a1b6d012a04f2e9418cac72373b4e92d, type: 3}
+  - {fileID: 4115463926035494005, guid: 421e3db7b81b547438a1e8acacca4756, type: 3}
+  - {fileID: 5791837812089533275, guid: ff174b1048b55144992cdabce8464b5d, type: 3}
+  - {fileID: 8445107479359350204, guid: f81c78fce7b75c5408818c1c04786368, type: 3}
+  - {fileID: 1914386185411123901, guid: a6fed03ad4a841e419c663add9f8e257, type: 3}
+  - {fileID: 8503803789909560491, guid: 759d39ba35ef57e4aa5dd932bb47f677, type: 3}
+  - {fileID: 6888604459051714943, guid: 0ee0613bc8c9c58418289608a71c0458, type: 3}
+  - {fileID: 7706632873260832429, guid: cdf6037a739aee6478325381c290b46d, type: 3}
+  - {fileID: 21307191939545348, guid: d3103ac2491318c4bb9cd7b31831d500, type: 3}
+  - {fileID: 8692684431725193976, guid: 23ad5b163b31faf4e83cc77f7d5cb2b6, type: 3}
+  - {fileID: 7991332076773548164, guid: cf2ac488106354348ae83769fc94f9dd, type: 3}
+  - {fileID: 5614380658996033705, guid: 3fd295e15adbbfa4fb7f6a83401e623f, type: 3}
+  - {fileID: 3535347484934827410, guid: cd7755d7c5a5cbf4eb01fbd14a3c3835, type: 3}
+  yellowCardsPrefabs:
+  - {fileID: 6117465791414131652, guid: 8ff225c9e97a7b0488be4e6e7882a18e, type: 3}
+  - {fileID: 2976651813626774063, guid: cfdf6d94e58131b468f325ce4443299a, type: 3}
+  - {fileID: 3620380033176810188, guid: 3dee3b023c4a64e43a03b9c9bfe45ad3, type: 3}
+  - {fileID: 2070029660606321198, guid: 7cfa5917c70d87f4aab1d78af35bc97a, type: 3}
+  - {fileID: 3657623635986423295, guid: 22942f472f29b0d4ea5d9a9c6eb982af, type: 3}
+  - {fileID: 3001592974459363301, guid: 90324517810538943a7b477cb4a6f2dd, type: 3}
+  - {fileID: 638741693819748378, guid: 0b6dadda920138f4f884d74bf168448a, type: 3}
+  - {fileID: 7765979607942085128, guid: 8db2500bf959e7b4c81f674a477d6b3f, type: 3}
+  - {fileID: 2216571909952735452, guid: e3a8813f8c1a49a439fb3deadb1bcffd, type: 3}
+  - {fileID: 5124550324171039663, guid: 982386bbd9e782b4691983ed3a534856, type: 3}
+  - {fileID: 4808344892560035876, guid: 66202fbac610613438c0bf32ab0edd1e, type: 3}
+  - {fileID: 3862814429532977188, guid: 9fbc3a12f20e129489f6b1085ffa59f1, type: 3}
+  - {fileID: 6356667060536793049, guid: 0da2c2c3022dac64e996d0b27b8bde16, type: 3}
+  blackCardsPrefabs:
+  - {fileID: 4248922682978508970, guid: ab7cf033786435b4689a37510c276e4c, type: 3}
+  - {fileID: 8455384687398900420, guid: 39f57e2179cb6744d9961657444cd2ad, type: 3}
+  - {fileID: 9155251519344185371, guid: 37d1015f48a097e4793ee7703a85b454, type: 3}
 --- !u!4 &6085835006439851385
 Transform:
   m_ObjectHideFlags: 0
@@ -755,7 +906,7 @@ Transform:
   m_Children:
   - {fileID: 4762667938766079176}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!212 &6085835006439851386
 SpriteRenderer:
