@@ -10,11 +10,12 @@ public class DragController : MonoBehaviour
     public float snapSpeed = 1f;
     public HandController handController;
     public CenterController centerController;
+    [HideInInspector]
+    public bool isDragable = true;
 
     Vector3 offset;
     float mouseZCoordinate;
     Vector3 moveToPosition;
-    bool isDragable = true;
     int defaultLayer = 0;
 
     public Vector3 MoveToPosition { get => moveToPosition; set => moveToPosition = value; }
@@ -63,12 +64,18 @@ public class DragController : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        GetComponent<SpriteRenderer>().sortingOrder = HIGHLIHTE_ORDER_LAYER;
+        if (isDragable)
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = HIGHLIHTE_ORDER_LAYER;
+        }
     }
 
     private void OnMouseExit()
     {
-        GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
+        if (isDragable)
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
+        }
     }
 
     private void Awake()

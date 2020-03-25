@@ -7,6 +7,7 @@ public class DrawPackController : MonoBehaviour
     const ushort CARDS_MAX_NUMBER = 112;
 
     public HandController playerHand;
+    public Sprite cardBack;
     public List<GameObject> blueCardsPrefabs;
     public List<GameObject> redCardsPrefabs;
     public List<GameObject> greenCardsPrefabs;
@@ -78,7 +79,13 @@ public class DrawPackController : MonoBehaviour
     public void DrawCard(HandController handController)
     {
         GameObject card = GetTopCard();
-        card.transform.parent = handController.transform;
+
+        if (handController.tag != "Player")
+        {
+            card.GetComponent<SpriteRenderer>().sprite = cardBack;
+            card.GetComponent<DragController>().isDragable = false;
+        }
+
         card.GetComponent<DragController>().handController = handController;
         card.GetComponent<DragController>().centerController = centerController;
         handController.AddCardToHand(card);

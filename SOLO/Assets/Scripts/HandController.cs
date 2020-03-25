@@ -17,6 +17,8 @@ public class HandController : MonoBehaviour
 
     public void AddCardToHand(GameObject card)
     {
+        card.transform.parent = transform;
+        card.transform.localRotation = new Quaternion(0, 0, 0, 0);
         cards.Add(card);
         ReorderCards();
     }
