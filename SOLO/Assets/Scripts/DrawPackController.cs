@@ -12,6 +12,7 @@ public class DrawPackController : MonoBehaviour
     public List<GameObject> greenCardsPrefabs;
     public List<GameObject> yellowCardsPrefabs;
     public List<GameObject> blackCardsPrefabs;
+    public CenterController centerController;
 
     List<Card> cards = new List<Card>();
 
@@ -293,6 +294,8 @@ public class DrawPackController : MonoBehaviour
 
         card.transform.position = transform.position;
         card.transform.parent = handController.transform;
+        card.GetComponent<DragController>().handController = handController;
+        card.GetComponent<DragController>().centerController = centerController;
         handController.AddCardToHand(card);
     }
 }

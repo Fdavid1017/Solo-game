@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DragController : MonoBehaviour
 {
+    const byte HIGHLIHTE_ORDER_LAYER = 20;
+
     public float snapSpeed = 1f;
     public HandController handController;
     public CenterController centerController;
@@ -13,6 +15,7 @@ public class DragController : MonoBehaviour
     float mouseZCoordinate;
     Vector3 moveToPosition;
     bool isDragable = true;
+    int defaultLayer = 0;
 
     public Vector3 MoveToPosition { get => moveToPosition; set => moveToPosition = value; }
 
@@ -40,22 +43,38 @@ public class DragController : MonoBehaviour
     private void OnMouseUp()
     {
         Vector3 mousePoint = GetMouseWorldPos();
-        if ((mousePoint.x > -1.5 && mousePoint.x < 1.5) && (mousePoint.y > -1.5 && mousePoint.y < 1.5))
+        if ((mousePoint.x > centerController.gameObject.transform.position.x - 1.5 &&
+            mousePoint.x < centerController.gameObject.transform.position.x + 1.5)
+            && (mousePoint.y > centerController.gameObject.transform.position.y - 1.5 &&
+            mousePoint.y < centerController.gameObject.transform.position.y + 1.5))
         {
-            handController.RemoveCard(this.gameObject);
             CenterController centerController = GameObject.FindObjectOfType<CenterController>();
+            if (!centerController.SetTopCard(gameObject.GetComponent<Card>()))
+            {
+                return;
+            }
+
+            handController.RemoveCard(this.gameObject);
             moveToPosition = centerController.gameObject.transform.position;
-            centerController.topCard = gameObject.GetComponent<Card>();
-
             transform.parent = centerController.gameObject.transform;
-
             isDragable = false;
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        GetComponent<SpriteRenderer>().sortingOrder = HIGHLIHTE_ORDER_LAYER;
+    }
+
+    private void OnMouseExit()
+    {
+        GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
     }
 
     private void Awake()
     {
         moveToPosition = transform.localPosition;
+        defaultLayer = GetComponent<SpriteRenderer>().sortingOrder;
     }
 
     private void Update()

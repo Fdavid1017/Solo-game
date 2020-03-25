@@ -41,6 +41,7 @@ public class HandController : MonoBehaviour
             {
                 Vector3 newPosition = new Vector3(0, 0, 0);
                 newPosition.x = handSizeBoundaries.x + (spacing * i);
+                newPosition.z = 0.001f * -i;
                 cards[i].GetComponent<DragController>().MoveToPosition = newPosition;
             }
         }
