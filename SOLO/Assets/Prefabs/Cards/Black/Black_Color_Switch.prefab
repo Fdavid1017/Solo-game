@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8455384687398900475}
   - component: {fileID: 8455384687398900474}
   - component: {fileID: 8455384687398900421}
+  - component: {fileID: 4659027960309909756}
   m_Layer: 0
   m_Name: Black_Color_Switch
   m_TagString: Untagged
@@ -123,4 +124,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSpeed: 5
-  randomRotationAmmount: 12
+  handController: {fileID: 0}
+  centerController: {fileID: 0}
+--- !u!114 &4659027960309909756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455384687398900420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4e26360f764304a98834adaa7d2913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 4
+  type: 13
