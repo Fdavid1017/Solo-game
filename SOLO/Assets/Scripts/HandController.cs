@@ -15,17 +15,6 @@ public class HandController : MonoBehaviour
         cards = new List<GameObject>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameObject newCard = Instantiate(cardToTest, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0), transform);
-            newCard.GetComponent<DragController>().handController = this;
-            AddCardToHand(newCard);
-        }
-    }
-
     public void AddCardToHand(GameObject card)
     {
         cards.Add(card);

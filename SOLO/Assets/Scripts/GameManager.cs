@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] players;
     public DrawPackController drawPackController;
+    public CenterController centerController;
+    public float dealingSpeed = 0.2f;
 
     sbyte roundDirection = 1;
     sbyte currentPlayer = 0;
@@ -21,16 +23,28 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     /*   if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            for (int i = 0; i < players.Length; i++)
+            StartCoroutine(DealCards());
+        }
+    }
+
+    IEnumerator DealCards()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            for (int j = 0; j < STARTING_CARD_COUNT; j++)
             {
-                for (int j = 0; j < STARTING_CARD_COUNT; j++)
-                {
-                    HandController current = players[i].GetComponent<HandController>();
-                    drawPackController.DrawCard(current);
-                }
+                HandController current = players[i].GetComponent<HandController>();
+                drawPackController.DrawCard(current);
+                yield return new WaitForSecondsRealtime(dealingSpeed);
             }
-        }*/
+        }
+
+        GameObject card = drawPackController.GetTopCard();
+        card.GetComponent<DragController>().centerController = centerController;
+        card.GetComponent<DragController>().MoveToPosition = centerController.gameObject.transform.position;
+        card.gameObject.transform.parent = centerController.transform;
+        centerController.SetTopCard(card.GetComponent<Card>());
     }
 }

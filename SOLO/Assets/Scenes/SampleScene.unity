@@ -458,6 +458,7 @@ MonoBehaviour:
   - {fileID: 1430042996}
   - {fileID: 1907210435}
   drawPackController: {fileID: 6085835006439851334}
+  dealingSpeed: 0.1
 --- !u!4 &1454229489
 Transform:
   m_ObjectHideFlags: 0
@@ -548,7 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408e5a38729324c4b881f88b2ce17a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topCard: {fileID: 0}
 --- !u!212 &1980867529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -893,6 +893,7 @@ MonoBehaviour:
   - {fileID: 4248922682978508970, guid: ab7cf033786435b4689a37510c276e4c, type: 3}
   - {fileID: 8455384687398900420, guid: 39f57e2179cb6744d9961657444cd2ad, type: 3}
   - {fileID: 9155251519344185371, guid: 37d1015f48a097e4793ee7703a85b454, type: 3}
+  centerController: {fileID: 1980867528}
 --- !u!4 &6085835006439851385
 Transform:
   m_ObjectHideFlags: 0

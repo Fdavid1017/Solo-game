@@ -77,6 +77,15 @@ public class DrawPackController : MonoBehaviour
 
     public void DrawCard(HandController handController)
     {
+        GameObject card = GetTopCard();
+        card.transform.parent = handController.transform;
+        card.GetComponent<DragController>().handController = handController;
+        card.GetComponent<DragController>().centerController = centerController;
+        handController.AddCardToHand(card);
+    }
+
+    public GameObject GetTopCard()
+    {
         Card topCard = cards[cards.Count - 1];
         cards.RemoveAt(cards.Count - 1);
         GameObject card;
@@ -291,11 +300,7 @@ public class DrawPackController : MonoBehaviour
                 card = new GameObject();
                 break;
         }
-
         card.transform.position = transform.position;
-        card.transform.parent = handController.transform;
-        card.GetComponent<DragController>().handController = handController;
-        card.GetComponent<DragController>().centerController = centerController;
-        handController.AddCardToHand(card);
+        return card;
     }
 }
