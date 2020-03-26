@@ -263,9 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerController: {fileID: 0}
-  drawPackController: {fileID: 0}
-  gameManager: {fileID: 0}
+  centerController: {fileID: 1980867528}
+  drawPackController: {fileID: 6085835006439851334}
+  gameManager: {fileID: 1454229488}
 --- !u!1 &1065975866
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,9 +452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerController: {fileID: 0}
-  drawPackController: {fileID: 0}
-  gameManager: {fileID: 0}
+  centerController: {fileID: 1980867528}
+  drawPackController: {fileID: 6085835006439851334}
+  gameManager: {fileID: 1454229488}
 --- !u!1 &1454229487
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,9 +565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerController: {fileID: 0}
-  drawPackController: {fileID: 0}
-  gameManager: {fileID: 0}
+  centerController: {fileID: 1980867528}
+  drawPackController: {fileID: 6085835006439851334}
+  gameManager: {fileID: 1454229488}
 --- !u!1 &1980867527
 GameObject:
   m_ObjectHideFlags: 0

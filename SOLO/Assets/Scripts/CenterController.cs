@@ -14,20 +14,26 @@ public class CenterController : MonoBehaviour
     {
         if (topCard == null || value.color == CardColor.Black || value.color == topCard.color || value.type == topCard.type)
         {
+            value.RevealCard();
+            value.transform.parent = transform;
             Vector3 t;
             if (topCard != null)
             {
-                t = topCard.gameObject.transform.position;
+                t = topCard.GetComponent<DragController>().MoveToPosition;
+                Debug.Log("Def:" + t);
                 t.z = 0;
-                topCard.gameObject.transform.position = t;
+                Debug.Log("Edited:" + t);
+                topCard.transform.position = t;
+                topCard.GetComponent<DragController>().MoveToPosition = t;
                 Destroy(topCard.gameObject, 2);
             }
 
             topCard = value;
-            t = topCard.GetComponent<DragController>().MoveToPosition;
-            t.z = 0.1f;
+            t = transform.position;
+            t.z = 1f;
             topCard.GetComponent<DragController>().MoveToPosition = t;
-
+            topCard.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Debug.Log(topCard.GetComponent<DragController>().MoveToPosition);
             gameManager.DoNextTurn();
 
             return true;

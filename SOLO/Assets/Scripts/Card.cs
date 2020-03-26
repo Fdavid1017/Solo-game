@@ -17,6 +17,7 @@ public class Card : MonoBehaviour
 {
     public CardColor color;
     public CardType type;
+    public Sprite baseSprite = null;
 
     public Card(CardColor color, CardType type)
     {
@@ -25,4 +26,12 @@ public class Card : MonoBehaviour
     }
 
     public Card() { }
+
+    public void RevealCard()
+    {
+        if (baseSprite != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = baseSprite;
+        }
+    }
 }

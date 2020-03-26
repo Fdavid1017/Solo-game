@@ -18,21 +18,23 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator DoTurn()
     {
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0.5f, 3f));
+
         List<GameObject> placeable = GetPlaceableCards();
 
         if (placeable.Count == 0 || UnityEngine.Random.Range(0, 100) > 90)
         {
             drawPackController.DrawCard(handController);
+            Debug.Log(gameObject.name + " drawed a card");
+            gameManager.DoNextTurn();
         }
         else
         {
             GameObject toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
-            Debug.Log("Placing: " + toPlace.GetComponent<Card>().color + " - " + toPlace.GetComponent<Card>().type);
+            Debug.Log(gameObject.name + " is placing: " + toPlace.GetComponent<Card>().color + " - " + toPlace.GetComponent<Card>().type);
+            handController.RemoveCard(toPlace);
+            centerController.SetTopCard(toPlace.GetComponent<Card>());
         }
-
-        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0.5f, 3f));
-
-        gameManager.DoNextTurn();
     }
 
     List<GameObject> GetPlaceableCards()
