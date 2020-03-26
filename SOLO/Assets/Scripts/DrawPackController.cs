@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class DrawPackController : MonoBehaviour
 {
+    //TODO: add option to reuse used cards if the draw pile is empty
+
     const ushort CARDS_MAX_NUMBER = 112;
 
     public HandController playerHand;
     public Sprite cardBack;
+    public GameManager gameManager;
+    public CenterController centerController;
     public List<GameObject> blueCardsPrefabs;
     public List<GameObject> redCardsPrefabs;
     public List<GameObject> greenCardsPrefabs;
     public List<GameObject> yellowCardsPrefabs;
     public List<GameObject> blackCardsPrefabs;
-    public CenterController centerController;
 
     List<Card> cards = new List<Card>();
 
@@ -74,6 +77,7 @@ public class DrawPackController : MonoBehaviour
     private void OnMouseDown()
     {
         DrawCard(playerHand);
+        gameManager.DoNextTurn();
     }
 
     public void DrawCard(HandController handController)

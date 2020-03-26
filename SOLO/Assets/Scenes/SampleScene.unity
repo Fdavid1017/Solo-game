@@ -214,6 +214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 673846584}
   - component: {fileID: 673846583}
+  - component: {fileID: 673846585}
   m_Layer: 0
   m_Name: EnemyHand_1
   m_TagString: Untagged
@@ -250,6 +251,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &673846585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673846582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerController: {fileID: 0}
+  drawPackController: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &1065975866
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,6 +403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1430042998}
   - component: {fileID: 1430042997}
+  - component: {fileID: 1430042999}
   m_Layer: 0
   m_Name: EnemyHand_2
   m_TagString: Untagged
@@ -423,6 +440,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!114 &1430042999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430042996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerController: {fileID: 0}
+  drawPackController: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &1454229487
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,12 +499,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454229487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907210435
 GameObject:
@@ -484,6 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1907210437}
   - component: {fileID: 1907210436}
+  - component: {fileID: 1907210438}
   m_Layer: 0
   m_Name: EnemyHand_3
   m_TagString: Untagged
@@ -520,6 +553,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1907210438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907210435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce3dd387a0d396468267344b631436d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerController: {fileID: 0}
+  drawPackController: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &1980867527
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408e5a38729324c4b881f88b2ce17a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1454229488}
 --- !u!212 &1980867529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -612,7 +661,7 @@ Transform:
   m_LocalScale: {x: 250, y: 250, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6085835006439851333
 GameObject:
@@ -648,6 +697,8 @@ MonoBehaviour:
   playerHand: {fileID: 1065975868}
   cardBack: {fileID: 3286163911610860551, guid: d110c12a046a62848adeb7e40ea19884,
     type: 3}
+  gameManager: {fileID: 1454229488}
+  centerController: {fileID: 1980867528}
   blueCardsPrefabs:
   - {fileID: 5534209718602137476, guid: 2e30f10cefbce9c4e8caf7e3f5a4b723, type: 3}
   - {fileID: 1773913103894030458, guid: 8856a55153d4c334cab230a50e3c4290, type: 3}
@@ -708,7 +759,6 @@ MonoBehaviour:
   - {fileID: 4248922682978508970, guid: ab7cf033786435b4689a37510c276e4c, type: 3}
   - {fileID: 8455384687398900420, guid: 39f57e2179cb6744d9961657444cd2ad, type: 3}
   - {fileID: 9155251519344185371, guid: 37d1015f48a097e4793ee7703a85b454, type: 3}
-  centerController: {fileID: 1980867528}
 --- !u!4 &6085835006439851385
 Transform:
   m_ObjectHideFlags: 0

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CenterController : MonoBehaviour
 {
-    [HideInInspector]
     private Card topCard = null;
+
+    public GameManager gameManager;
 
     public Card TopCard { get => topCard; }
 
@@ -26,6 +27,9 @@ public class CenterController : MonoBehaviour
             t = topCard.GetComponent<DragController>().MoveToPosition;
             t.z = 0.1f;
             topCard.GetComponent<DragController>().MoveToPosition = t;
+
+            gameManager.DoNextTurn();
+
             return true;
         }
         return false;

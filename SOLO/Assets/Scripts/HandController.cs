@@ -9,6 +9,8 @@ public class HandController : MonoBehaviour
 
     List<GameObject> cards;
 
+    public List<GameObject> Cards { get => cards; }
+
     // Start is called before the first frame update
     void Start()
     {
