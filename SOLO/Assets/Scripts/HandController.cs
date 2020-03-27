@@ -5,7 +5,6 @@ using UnityEngine;
 public class HandController : MonoBehaviour
 {
     public Vector2 handSizeBoundaries = new Vector2(-3, 3);
-    public GameObject cardToTest;
 
     List<GameObject> cards;
 
@@ -20,7 +19,7 @@ public class HandController : MonoBehaviour
     public void AddCardToHand(GameObject card)
     {
         card.transform.parent = transform;
-        card.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        // card.transform.localRotation = new Quaternion(0, 0, 0, 0);
         cards.Add(card);
         ReorderCards();
     }
@@ -36,6 +35,7 @@ public class HandController : MonoBehaviour
                 newPosition.x = handSizeBoundaries.x + (spacing * i);
                 newPosition.z = 0.001f * -i;
                 cards[i].GetComponent<DragController>().MoveToPosition = newPosition;
+                cards[i].transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
         }
         else if (cards.Count > 0)
@@ -48,5 +48,46 @@ public class HandController : MonoBehaviour
     {
         cards.Remove(card);
         ReorderCards();
+    }
+
+    public static void ChangeHandCards(HandController hand1, HandController hand2, Sprite cardBack)
+    {
+        List<GameObject> temp = hand1.cards;
+        hand1.cards = hand2.cards;
+        hand2.cards = temp;
+
+        foreach (GameObject card in hand1.cards)
+        {
+            if (hand1.tag == "Player")
+            {
+                card.GetComponent<Card>().RevealCard();
+                card.GetComponent<DragController>().isDragable = true;
+            }
+            else
+            {
+                card.GetComponent<SpriteRenderer>().sprite = cardBack;
+                card.GetComponent<DragController>().isDragable = false;
+            }
+
+            card.transform.parent = hand1.gameObject.transform;
+        }
+        foreach (GameObject card in hand2.cards)
+        {
+            if (hand2.tag == "Player")
+            {
+                card.GetComponent<Card>().RevealCard();
+                card.GetComponent<DragController>().isDragable = true;
+            }
+            else
+            {
+                card.GetComponent<SpriteRenderer>().sprite = cardBack;
+                card.GetComponent<DragController>().isDragable = false;
+            }
+
+            card.transform.parent = hand2.gameObject.transform;
+        }
+
+        hand1.ReorderCards();
+        hand2.ReorderCards();
     }
 }

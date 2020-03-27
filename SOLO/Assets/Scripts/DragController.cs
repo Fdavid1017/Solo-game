@@ -22,8 +22,11 @@ public class DragController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.localPosition).z;
-        offset = transform.localPosition - GetMouseWorldPos();
+        if (isDragable)
+        {
+            mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.localPosition).z;
+            offset = transform.localPosition - GetMouseWorldPos();
+        }
     }
 
     private Vector3 GetMouseWorldPos()
@@ -43,22 +46,25 @@ public class DragController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Vector3 mousePoint = GetMouseWorldPos();
-        if ((mousePoint.x > centerController.gameObject.transform.position.x - 1.5 &&
-            mousePoint.x < centerController.gameObject.transform.position.x + 1.5)
-            && (mousePoint.y > centerController.gameObject.transform.position.y - 1.5 &&
-            mousePoint.y < centerController.gameObject.transform.position.y + 1.5))
+        if (isDragable)
         {
-            CenterController centerController = GameObject.FindObjectOfType<CenterController>();
-            if (!centerController.SetTopCard(gameObject.GetComponent<Card>()))
+            Vector3 mousePoint = GetMouseWorldPos();
+            if ((mousePoint.x > centerController.gameObject.transform.position.x - 1.5 &&
+                mousePoint.x < centerController.gameObject.transform.position.x + 1.5)
+                && (mousePoint.y > centerController.gameObject.transform.position.y - 1.5 &&
+                mousePoint.y < centerController.gameObject.transform.position.y + 1.5))
             {
-                return;
-            }
+                CenterController centerController = GameObject.FindObjectOfType<CenterController>();
+                if (!centerController.SetTopCard(gameObject.GetComponent<Card>(), handController))
+                {
+                    return;
+                }
 
-            handController.RemoveCard(this.gameObject);
-            moveToPosition = centerController.gameObject.transform.position;
-            transform.parent = centerController.gameObject.transform;
-            isDragable = false;
+                handController.RemoveCard(this.gameObject);
+                moveToPosition = centerController.gameObject.transform.position;
+                transform.parent = centerController.gameObject.transform;
+                isDragable = false;
+            }
         }
     }
 

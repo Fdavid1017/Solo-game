@@ -25,15 +25,13 @@ public class EnemyController : MonoBehaviour
         if (placeable.Count == 0 || UnityEngine.Random.Range(0, 100) > 90)
         {
             drawPackController.DrawCard(handController);
-            Debug.Log(gameObject.name + " drawed a card");
             gameManager.DoNextTurn();
         }
         else
         {
             GameObject toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
-            Debug.Log(gameObject.name + " is placing: " + toPlace.GetComponent<Card>().color + " - " + toPlace.GetComponent<Card>().type);
             handController.RemoveCard(toPlace);
-            centerController.SetTopCard(toPlace.GetComponent<Card>());
+            centerController.SetTopCard(toPlace.GetComponent<Card>(),handController);
         }
     }
 
