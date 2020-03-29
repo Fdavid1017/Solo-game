@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator DoTurn()
     {
-        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0.5f, 3f));
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
 
         List<GameObject> placeable = GetPlaceableCards();
 
@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
         {
             GameObject toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
             handController.RemoveCard(toPlace);
-            centerController.SetTopCard(toPlace.GetComponent<Card>(),handController);
+            centerController.SetTopCard(toPlace.GetComponent<Card>(), handController);
         }
     }
 
@@ -44,10 +44,30 @@ public class EnemyController : MonoBehaviour
 
         foreach (GameObject item in hand)
         {
+            Debug.Log("1");
             Card card = item.GetComponent<Card>();
             if (centerCard == null || card.color == CardColor.Black || card.color == centerCard.color || card.type == centerCard.type)
             {
-                placeable.Add(item);
+                Debug.Log("2");
+                if (centerCard == null || (centerCard.type != CardType.Draw_2 && centerCard.type == CardType.Draw_4))
+                {
+                    Debug.Log("3");
+                    placeable.Add(item);
+                }
+                else
+                {
+                    Debug.Log("4");
+                    if (centerCard.type == CardType.Draw_2 && (card.type == CardType.Draw_2 || card.type == CardType.Draw_4))
+                    {
+                        Debug.Log("5");
+                        placeable.Add(item);
+                    }
+                    if (centerCard.type == CardType.Draw_4 && card.type == CardType.Draw_4)
+                    {
+                        Debug.Log("6");
+                        placeable.Add(item);
+                    }
+                }
             }
         }
 

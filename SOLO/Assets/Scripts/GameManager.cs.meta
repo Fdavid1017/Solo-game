@@ -3,7 +3,11 @@ guid: 5f05e05e2a40acc4a86552f2a87ba16e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - drawPackController: {instanceID: 0}
+  - centerController: {instanceID: 0}
+  - cardBack: {fileID: 3286163911610860551, guid: d110c12a046a62848adeb7e40ea19884,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

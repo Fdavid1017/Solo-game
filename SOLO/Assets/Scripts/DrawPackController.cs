@@ -76,8 +76,11 @@ public class DrawPackController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        DrawCard(playerHand);
-        gameManager.DoNextTurn();
+        if (gameManager.players[gameManager.currentPlayer].tag == "Player")
+        {
+            DrawCard(playerHand);
+            gameManager.DoNextTurn();
+        }
     }
 
     public void DrawCard(HandController handController)

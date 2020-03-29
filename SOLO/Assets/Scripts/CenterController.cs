@@ -6,6 +6,8 @@ public class CenterController : MonoBehaviour
 {
     private Card topCard = null;
     private HandController lastPlacer;
+    bool cardEffectUsed = true;
+    int drawCount = 0;
 
     public GameManager gameManager;
     public Sprite draw_4_red;
@@ -17,6 +19,9 @@ public class CenterController : MonoBehaviour
     public Sprite change_color_blue;
     public Sprite change_color_yellow;
     public GameObject colorChangerPanel;
+    public GameObject changeCardsUI;
+    public DrawPackController drawPackController;
+    public GameObject directionArrows;
 
     public Card TopCard { get => topCard; }
 
@@ -24,6 +29,18 @@ public class CenterController : MonoBehaviour
     {
         if (topCard == null || topCard.color == CardColor.Black || value.color == CardColor.Black || value.color == topCard.color || value.type == topCard.type)
         {
+            if (topCard != null && !cardEffectUsed)
+            {
+                if ((topCard.type == CardType.Draw_2 && (value.type != CardType.Draw_2 && value.type != CardType.Draw_4)))
+                {
+                    return false;
+                }
+                if ((topCard.type == CardType.Draw_4 && value.type != CardType.Draw_4))
+                {
+                    return false;
+                }
+            }
+
             lastPlacer = placer;
             value.RevealCard();
             value.transform.parent = transform;
@@ -39,41 +56,163 @@ public class CenterController : MonoBehaviour
             topCard.GetComponent<SpriteRenderer>().sortingOrder = 2;
             topCard.GetComponent<DragController>().MoveToPosition = t;
             topCard.transform.rotation = new Quaternion(0, 0, 0, 0);
-            gameManager.cardEffectUsed = false;
-            if (placer != null && (topCard.type == CardType.Change_color || topCard.type == CardType.Draw_4))
+            cardEffectUsed = false;
+            if (placer != null)
             {
-                if (placer.tag == "Player")
+                if (placer.Cards.Count == 0)
                 {
-                    colorChangerPanel.SetActive(true);
+                    Debug.Log(placer.name + " won the game");
+                    return true;
                 }
-                else
+
+                if (!cardEffectUsed)
                 {
-                    switch (UnityEngine.Random.Range(0, 3))
+                    switch (topCard.type)
                     {
-                        case 0:
-                            ChangeTopCardColor(CardColor.Blue);
+                        case CardType.Skipp:
+                            gameManager.IncreaseNextPlayer();
+                            Debug.Log(gameManager.players[gameManager.currentPlayer] + " skipped");
+                            gameManager.DoNextTurn();
                             break;
-                        case 1:
-                            ChangeTopCardColor(CardColor.Green);
+                        case CardType.Switch_direction:
+                            gameManager.roundDirection *= -1;
+                            Vector3 scale = directionArrows.transform.localScale;
+                            scale.x *= -1;
+                            directionArrows.transform.localScale = scale;
+                            Debug.Log("Round direction changed");
+                            gameManager.DoNextTurn();
                             break;
-                        case 2:
-                            ChangeTopCardColor(CardColor.Red);
+                        case CardType.Change_cards:
+                            if (placer.tag == "Player")
+                            {
+                                changeCardsUI.SetActive(true);
+                            }
+                            else
+                            {
+                                byte playerIndex = (byte)UnityEngine.Random.Range(0, 2);
+                                switch (playerIndex)
+                                {
+                                    case 0:
+                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                        break;
+                                    case 1:
+                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                        break;
+                                    case 2:
+                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                        break;
+                                }
+                                gameManager.DoNextTurn();
+                            }
+                            Debug.Log("Changeing cards");
                             break;
-                        case 3:
-                            ChangeTopCardColor(CardColor.Yellow);
+                        case CardType.Switch_cards_all:
+                            if (gameManager.roundDirection > 0)
+                            {
+                                for (int i = gameManager.players.Count - 1; i > 0; i--)
+                                {
+                                    HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i - 1].GetComponent<HandController>(), gameManager.cardBack);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < gameManager.players.Count - 1; i++)
+                                {
+                                    HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i + 1].GetComponent<HandController>(), gameManager.cardBack);
+                                }
+                            }
+
+                            Debug.Log("Changeing all cards");
+                            gameManager.DoNextTurn();
+                            break;
+
+                        case CardType.Draw_2:
+                            drawCount += 2;
+                            bool canPlace = false;
+                            for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace; i++)
+                            {
+                                if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_2 ||
+                                    gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
+                                {
+                                    canPlace = true;
+                                }
+                            }
+
+                            if (!canPlace)
+                            {
+                                gameManager.IncreaseNextPlayer();
+                                for (int i = 0; i < drawCount; i++)
+                                {
+                                    drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
+                                }
+                                drawCount = 0;
+                            }
+                            Debug.Log("Drawing 2");
+                            gameManager.DoNextTurn();
+                            break;
+                        case CardType.Draw_4:
+                            drawCount += 4;
+                            bool canPlace2 = false;
+                            for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace2; i++)
+                            {
+                                if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
+                                {
+                                    canPlace2 = true;
+                                }
+                            }
+
+                            if (!canPlace2)
+                            {
+                                gameManager.IncreaseNextPlayer();
+                                for (int i = 0; i < drawCount; i++)
+                                {
+                                    drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
+                                }
+                                drawCount = 0;
+                            }
+
+                            ChangeTopColor(placer);
+                            Debug.Log("Drawing 4");
+                            break;
+                        case CardType.Change_color:
+                            ChangeTopColor(placer);
+                            break;
+                        default:
+                            gameManager.DoNextTurn();
                             break;
                     }
-                    gameManager.DoNextTurn();
+                    cardEffectUsed = true;
                 }
             }
-            else
-            {
-                gameManager.DoNextTurn();
-            }
-
             return true;
         }
         return false;
+    }
+
+    private void ChangeTopColor(HandController placer)
+    {
+        if (placer.tag == "Player")
+        {
+            colorChangerPanel.SetActive(true);
+        }
+        else
+        {
+            switch (UnityEngine.Random.Range(0, 3))
+            {
+                case 0:
+                    ChangeTopCardColor(CardColor.Blue);
+                    break;
+                case 1:
+                    ChangeTopCardColor(CardColor.Green);
+                    break;
+                case 2:
+                    ChangeTopCardColor(CardColor.Red);
+                    break;
+                case 3:
+                    ChangeTopCardColor(CardColor.Yellow);
+                    break;
+            }
+        }
     }
 
     public bool ChangeTopCardColor(CardColor color)

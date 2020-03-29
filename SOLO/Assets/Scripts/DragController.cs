@@ -17,12 +17,13 @@ public class DragController : MonoBehaviour
     float mouseZCoordinate;
     Vector3 moveToPosition;
     int defaultLayer = 0;
+    GameManager gameManager;
 
     public Vector3 MoveToPosition { get => moveToPosition; set => moveToPosition = value; }
 
     private void OnMouseDown()
     {
-        if (isDragable)
+        if (isDragable && gameManager.players[gameManager.currentPlayer].tag == "Player")
         {
             mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.localPosition).z;
             offset = transform.localPosition - GetMouseWorldPos();
@@ -38,7 +39,7 @@ public class DragController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (isDragable)
+        if (isDragable && gameManager.players[gameManager.currentPlayer].tag == "Player")
         {
             transform.localPosition = GetMouseWorldPos() + offset;
         }
@@ -46,7 +47,7 @@ public class DragController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (isDragable)
+        if (isDragable && gameManager.players[gameManager.currentPlayer].tag == "Player")
         {
             Vector3 mousePoint = GetMouseWorldPos();
             if ((mousePoint.x > centerController.gameObject.transform.position.x - 1.5 &&
@@ -88,6 +89,11 @@ public class DragController : MonoBehaviour
     {
         moveToPosition = transform.localPosition;
         defaultLayer = GetComponent<SpriteRenderer>().sortingOrder;
+    }
+
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
