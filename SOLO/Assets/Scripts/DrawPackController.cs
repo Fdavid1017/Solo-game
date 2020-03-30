@@ -89,7 +89,6 @@ public class DrawPackController : MonoBehaviour
 
         if (handController.tag != "Player")
         {
-            card.GetComponent<Card>().baseSprite = card.GetComponent<SpriteRenderer>().sprite;
             card.GetComponent<SpriteRenderer>().sprite = cardBack;
             card.GetComponent<DragController>().isDragable = false;
         }

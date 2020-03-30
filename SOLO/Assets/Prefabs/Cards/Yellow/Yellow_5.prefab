@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3657623635986423235}
   - component: {fileID: 3657623635986423232}
-  - component: {fileID: 3657623635986423233}
   - component: {fileID: 3657623635986423294}
   - component: {fileID: 521788622137575367}
+  - component: {fileID: 8525224876910929608}
+  - component: {fileID: -6143287856314100187}
   m_Layer: 0
   m_Name: Yellow_5
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3657623635986423295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7846763, y: -2.228199, z: -2.1171875}
-  m_LocalScale: {x: 0.412, y: 0.412, z: 0.412}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,8 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: 2c2595bc2f69dab4caea73f9c97d9328,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 539016d2082b8ec4d9e3a0f54b4b2fd7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3657623635986423233
+--- !u!114 &3657623635986423294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657623635986423295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d1bdb6d8db27eb459c355f64bf293c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapSpeed: 5
+  handController: {fileID: 0}
+  centerController: {fileID: 0}
+  isDragable: 1
+--- !u!114 &521788622137575367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657623635986423295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4e26360f764304a98834adaa7d2913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 2
+  type: 4
+  baseSprite: {fileID: 21300000, guid: 539016d2082b8ec4d9e3a0f54b4b2fd7, type: 3}
+--- !u!61 &8525224876910929608
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,16 +133,16 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.49, y: 8.01}
+    oldSize: {x: 23.084532, y: 32.56}
     newSize: {x: 5.49, y: 8.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.49, y: 8.01}
+  m_Size: {x: 23.084532, y: 32.56}
   m_EdgeRadius: 0
---- !u!114 &3657623635986423294
+--- !u!114 &-6143287856314100187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,23 +151,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3657623635986423295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d1bdb6d8db27eb459c355f64bf293c8, type: 3}
+  m_Script: {fileID: 11500000, guid: e931ca9c1e078664590402337539f4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapSpeed: 5
-  handController: {fileID: 0}
-  centerController: {fileID: 0}
---- !u!114 &521788622137575367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3657623635986423295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4e26360f764304a98834adaa7d2913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 2
-  type: 4
+  offset: {x: 0, y: 0, z: 0}
+  material: {fileID: 2100000, guid: 822c4be48548f7a448ea053b876b3f89, type: 2}
