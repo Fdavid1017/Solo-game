@@ -233,7 +233,8 @@ public class CenterController : MonoBehaviour
     {
         if (placer.tag == "Player")
         {
-            colorChangerPanel.SetActive(true);
+            //colorChangerPanel.SetActive(true);
+            colorChangerPanel.GetComponent<Animator>().SetBool("shown", true);
         }
         else
         {
@@ -316,7 +317,8 @@ public class CenterController : MonoBehaviour
                     }
                     break;
             }
-            colorChangerPanel.SetActive(false);
+            // colorChangerPanel.SetActive(false);
+            colorChangerPanel.GetComponent<Animator>().SetBool("shown", false);
             gameManager.DoNextTurn();
             return true;
         }
