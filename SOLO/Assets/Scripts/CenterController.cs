@@ -6,9 +6,12 @@ public class CenterController : MonoBehaviour
 {
     private Card topCard = null;
     private HandController lastPlacer;
-    bool cardEffectUsed = true;
-    int drawCount = 0;
+    private List<Card> alreadyUsedCards = new List<Card>();
 
+    [HideInInspector]
+    public bool cardEffectUsed = true;
+    [HideInInspector]
+    public int drawCount = 0;
     public GameManager gameManager;
     public Sprite draw_4_red;
     public Sprite draw_4_green;
@@ -24,6 +27,7 @@ public class CenterController : MonoBehaviour
     public GameObject directionArrows;
 
     public Card TopCard { get => topCard; }
+    public List<Card> AlreadyUsedCards { get => alreadyUsedCards; }
 
     public bool SetTopCard(Card value, HandController placer)
     {
@@ -31,12 +35,17 @@ public class CenterController : MonoBehaviour
         {
             if (topCard != null && !cardEffectUsed)
             {
-                if ((topCard.type == CardType.Draw_2 && (value.type != CardType.Draw_2 && value.type != CardType.Draw_4)))
+                if ((topCard.type == CardType.Draw_2))
                 {
-                    return false;
+                    if (value.type != CardType.Draw_2 && value.type != CardType.Draw_4)
+                    {
+                        Debug.Log("1");
+                        return false;
+                    }
                 }
                 if ((topCard.type == CardType.Draw_4 && value.type != CardType.Draw_4))
                 {
+                    Debug.Log("2");
                     return false;
                 }
             }
@@ -56,7 +65,6 @@ public class CenterController : MonoBehaviour
             topCard.GetComponent<SpriteRenderer>().sortingOrder = 2;
             topCard.GetComponent<DragController>().MoveToPosition = t;
             topCard.transform.rotation = new Quaternion(0, 0, 0, 0);
-            cardEffectUsed = false;
             if (placer != null)
             {
                 if (placer.Cards.Count == 0)
@@ -65,125 +73,143 @@ public class CenterController : MonoBehaviour
                     return true;
                 }
 
-                if (!cardEffectUsed)
+                //if (!cardEffectUsed)
+                //{
+                switch (topCard.type)
                 {
-                    switch (topCard.type)
-                    {
-                        case CardType.Skipp:
+                    case CardType.Skipp:
+                        gameManager.IncreaseNextPlayer();
+                        Debug.Log(gameManager.players[gameManager.currentPlayer] + " skipped");
+                        cardEffectUsed = false;
+                        gameManager.DoNextTurn();
+                        break;
+                    case CardType.Switch_direction:
+                        gameManager.roundDirection *= -1;
+                        /* Vector3 scale = directionArrows.transform.localScale;
+                         scale.x *= -1;
+                         directionArrows.transform.localScale = scale;
+                         directionArrows.GetComponent<Rotate>().speed *= -1;*/
+                        directionArrows.GetComponent<Rotate>().ChangeDirection();
+                        Debug.Log("Round direction changed");
+                        cardEffectUsed = false;
+                        gameManager.DoNextTurn();
+                        break;
+                    case CardType.Change_cards:
+                        cardEffectUsed = false;
+                        if (placer.tag == "Player")
+                        {
+                            changeCardsUI.SetActive(true);
+                        }
+                        else
+                        {
+                            byte playerIndex = (byte)UnityEngine.Random.Range(0, 2);
+                            switch (playerIndex)
+                            {
+                                case 0:
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    break;
+                                case 1:
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    break;
+                                case 2:
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    break;
+                            }
+                            gameManager.DoNextTurn();
+                        }
+                        Debug.Log("Changeing cards");
+                        break;
+                    case CardType.Switch_cards_all:
+                        cardEffectUsed = false;
+                        if (gameManager.roundDirection > 0)
+                        {
+                            for (int i = gameManager.players.Count - 1; i > 0; i--)
+                            {
+                                HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i - 1].GetComponent<HandController>(), gameManager.cardBack);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < gameManager.players.Count - 1; i++)
+                            {
+                                HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i + 1].GetComponent<HandController>(), gameManager.cardBack);
+                            }
+                        }
+
+                        Debug.Log("Changeing all cards");
+                        gameManager.DoNextTurn();
+                        break;
+
+                    case CardType.Draw_2:
+                        cardEffectUsed = false;
+                        drawCount += 2;
+                        bool canPlace = false;
+                        for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace; i++)
+                        {
+                            if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_2 ||
+                                gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
+                            {
+                                canPlace = true;
+                            }
+                        }
+
+                        if (!canPlace)
+                        {
                             gameManager.IncreaseNextPlayer();
-                            Debug.Log(gameManager.players[gameManager.currentPlayer] + " skipped");
-                            gameManager.DoNextTurn();
-                            break;
-                        case CardType.Switch_direction:
-                            gameManager.roundDirection *= -1;
-                            Vector3 scale = directionArrows.transform.localScale;
-                            scale.x *= -1;
-                            directionArrows.transform.localScale = scale;
-                            Debug.Log("Round direction changed");
-                            gameManager.DoNextTurn();
-                            break;
-                        case CardType.Change_cards:
-                            if (placer.tag == "Player")
+                            for (int i = 0; i < drawCount; i++)
                             {
-                                changeCardsUI.SetActive(true);
+                                drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
                             }
-                            else
+                            drawCount = 0;
+                            cardEffectUsed = true;
+                        }
+                        Debug.Log("Drawing 2");
+                        gameManager.DoNextTurn();
+                        break;
+                    case CardType.Draw_4:
+                        cardEffectUsed = false;
+                        drawCount += 4;
+                        bool canPlace2 = false;
+                        for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace2; i++)
+                        {
+                            if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
                             {
-                                byte playerIndex = (byte)UnityEngine.Random.Range(0, 2);
-                                switch (playerIndex)
-                                {
-                                    case 0:
-                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
-                                        break;
-                                    case 1:
-                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
-                                        break;
-                                    case 2:
-                                        gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
-                                        break;
-                                }
-                                gameManager.DoNextTurn();
+                                canPlace2 = true;
                             }
-                            Debug.Log("Changeing cards");
-                            break;
-                        case CardType.Switch_cards_all:
-                            if (gameManager.roundDirection > 0)
-                            {
-                                for (int i = gameManager.players.Count - 1; i > 0; i--)
-                                {
-                                    HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i - 1].GetComponent<HandController>(), gameManager.cardBack);
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < gameManager.players.Count - 1; i++)
-                                {
-                                    HandController.ChangeHandCards(gameManager.players[i].GetComponent<HandController>(), gameManager.players[i + 1].GetComponent<HandController>(), gameManager.cardBack);
-                                }
-                            }
+                        }
 
-                            Debug.Log("Changeing all cards");
-                            gameManager.DoNextTurn();
-                            break;
-
-                        case CardType.Draw_2:
-                            drawCount += 2;
-                            bool canPlace = false;
-                            for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace; i++)
+                        if (!canPlace2)
+                        {
+                            gameManager.IncreaseNextPlayer();
+                            for (int i = 0; i < drawCount; i++)
                             {
-                                if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_2 ||
-                                    gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
-                                {
-                                    canPlace = true;
-                                }
+                                drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
                             }
+                            drawCount = 0;
+                            cardEffectUsed = true;
+                        }
 
-                            if (!canPlace)
-                            {
-                                gameManager.IncreaseNextPlayer();
-                                for (int i = 0; i < drawCount; i++)
-                                {
-                                    drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
-                                }
-                                drawCount = 0;
-                            }
-                            Debug.Log("Drawing 2");
-                            gameManager.DoNextTurn();
-                            break;
-                        case CardType.Draw_4:
-                            drawCount += 4;
-                            bool canPlace2 = false;
-                            for (int i = 0; i < gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count && !canPlace2; i++)
-                            {
-                                if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards[i].GetComponent<Card>().type == CardType.Draw_4)
-                                {
-                                    canPlace2 = true;
-                                }
-                            }
-
-                            if (!canPlace2)
-                            {
-                                gameManager.IncreaseNextPlayer();
-                                for (int i = 0; i < drawCount; i++)
-                                {
-                                    drawPackController.DrawCard(gameManager.players[gameManager.currentPlayer].GetComponent<HandController>());
-                                }
-                                drawCount = 0;
-                            }
-
-                            ChangeTopColor(placer);
-                            Debug.Log("Drawing 4");
-                            break;
-                        case CardType.Change_color:
-                            ChangeTopColor(placer);
-                            break;
-                        default:
-                            gameManager.DoNextTurn();
-                            break;
-                    }
-                    cardEffectUsed = true;
+                        ChangeTopColor(placer);
+                        Debug.Log("Drawing 4");
+                        break;
+                    case CardType.Change_color:
+                        cardEffectUsed = false;
+                        ChangeTopColor(placer);
+                        break;
+                    default:
+                        cardEffectUsed = false;
+                        gameManager.DoNextTurn();
+                        break;
                 }
+                /*    cardEffectUsed = true;
+                }
+                else
+                {
+                    cardEffectUsed = true;
+                    gameManager.DoNextTurn();
+                }*/
             }
+            alreadyUsedCards.Add(topCard);
             return true;
         }
         return false;
@@ -220,6 +246,7 @@ public class CenterController : MonoBehaviour
         if (topCard.type == CardType.Change_color || topCard.type == CardType.Draw_4)
         {
             topCard.color = color;
+            Debug.Log("Changeing color to " + color);
             switch (color)
             {
                 case CardColor.Red:
@@ -227,9 +254,11 @@ public class CenterController : MonoBehaviour
                     {
                         case CardType.Change_color:
                             topCard.GetComponent<SpriteRenderer>().sprite = change_color_red;
+                            topCard.GetComponent<Card>().baseSprite = change_color_red;
                             break;
                         case CardType.Draw_4:
                             topCard.GetComponent<SpriteRenderer>().sprite = draw_4_red;
+                            topCard.GetComponent<Card>().baseSprite = draw_4_red;
                             break;
                     }
                     break;
@@ -238,9 +267,11 @@ public class CenterController : MonoBehaviour
                     {
                         case CardType.Change_color:
                             topCard.GetComponent<SpriteRenderer>().sprite = change_color_green;
+                            topCard.GetComponent<Card>().baseSprite = change_color_green;
                             break;
                         case CardType.Draw_4:
                             topCard.GetComponent<SpriteRenderer>().sprite = draw_4_green;
+                            topCard.GetComponent<Card>().baseSprite = draw_4_green;
                             break;
                     }
                     break;
@@ -249,9 +280,11 @@ public class CenterController : MonoBehaviour
                     {
                         case CardType.Change_color:
                             topCard.GetComponent<SpriteRenderer>().sprite = change_color_yellow;
+                            topCard.GetComponent<Card>().baseSprite = change_color_yellow;
                             break;
                         case CardType.Draw_4:
                             topCard.GetComponent<SpriteRenderer>().sprite = draw_4_yellow;
+                            topCard.GetComponent<Card>().baseSprite = draw_4_yellow;
                             break;
                     }
                     break;
@@ -260,9 +293,11 @@ public class CenterController : MonoBehaviour
                     {
                         case CardType.Change_color:
                             topCard.GetComponent<SpriteRenderer>().sprite = change_color_blue;
+                            topCard.GetComponent<Card>().baseSprite = change_color_blue;
                             break;
                         case CardType.Draw_4:
                             topCard.GetComponent<SpriteRenderer>().sprite = draw_4_blue;
+                            topCard.GetComponent<Card>().baseSprite = draw_4_blue;
                             break;
                     }
                     break;

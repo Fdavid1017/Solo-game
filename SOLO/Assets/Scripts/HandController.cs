@@ -28,11 +28,20 @@ public class HandController : MonoBehaviour
     {
         if (cards.Count > 1)
         {
-            float spacing = Mathf.Abs(handSizeBoundaries.x - handSizeBoundaries.y) / (cards.Count - 1);
+            Vector3 handBoundairesTemp = handSizeBoundaries;
+            if (cards.Count == 2)
+            {
+                float distance = (2.3f / cards.Count + 0.15f) * cards.Count;
+
+                handBoundairesTemp.x = 0 - distance / cards.Count;
+                handBoundairesTemp.y = 0 + distance / cards.Count;
+            }
+
+            float spacing = Mathf.Abs(handBoundairesTemp.x - handBoundairesTemp.y) / (cards.Count - 1);
             for (int i = 0; i < cards.Count; i++)
             {
                 Vector3 newPosition = new Vector3(0, 0, 0);
-                newPosition.x = handSizeBoundaries.x + (spacing * i);
+                newPosition.x = handBoundairesTemp.x + (spacing * i);
                 newPosition.z = 0.001f * -i;
                 cards[i].GetComponent<DragController>().MoveToPosition = newPosition;
                 cards[i].transform.localRotation = new Quaternion(0, 0, 0, 0);

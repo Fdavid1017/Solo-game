@@ -116,6 +116,7 @@ MonoBehaviour:
   color: 0
   type: 7
   baseSprite: {fileID: 21300000, guid: 7cfacfa1ec18e7a468d85c1986746349, type: 3}
+  scaleToShrink: {x: 0, y: 0, z: 0}
 --- !u!61 &8170220514197283613
 BoxCollider2D:
   m_ObjectHideFlags: 0

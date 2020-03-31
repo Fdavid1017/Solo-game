@@ -22,6 +22,7 @@ public class DrawPackController : MonoBehaviour
 
     private void Start()
     {
+
         CardColor color = CardColor.Blue;
         for (int i = 0; i < 4; i++)
         {
@@ -96,6 +97,26 @@ public class DrawPackController : MonoBehaviour
         card.GetComponent<DragController>().handController = handController;
         card.GetComponent<DragController>().centerController = centerController;
         handController.AddCardToHand(card);
+
+        if (cards.Count == 1)
+        {
+            Debug.Log("Refilling draw pile");
+
+            Card lastCard = cards[0];
+            cards = centerController.AlreadyUsedCards;
+
+            int count = cards.Count;
+            int last = count - 1;
+            for (var i = 0; i < last; ++i)
+            {
+                int r = UnityEngine.Random.Range(i, count);
+                Card tmp = cards[i];
+                cards[i] = cards[r];
+                cards[r] = tmp;
+            }
+
+            cards.Add(lastCard);
+        }
     }
 
     public GameObject GetTopCard()

@@ -18,6 +18,9 @@ public class Card : MonoBehaviour
     public CardColor color;
     public CardType type;
     public Sprite baseSprite = null;
+    public Vector3 scaleToShrink;
+
+    Vector3 defaultScale;
 
     public Card(CardColor color, CardType type)
     {
@@ -27,9 +30,23 @@ public class Card : MonoBehaviour
 
     public Card() { }
 
+    private void Start()
+    {
+        defaultScale = transform.localScale;
+        scaleToShrink = defaultScale;
+    }
+
+    private void Update()
+    {
+        if (transform.localScale != scaleToShrink)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, scaleToShrink, 0.5f);
+        }
+    }
+
     public void RevealCard()
     {
-        if (baseSprite != null)
+        if (GetComponent<SpriteRenderer>().sprite != baseSprite && baseSprite != null)
         {
             GetComponent<SpriteRenderer>().sprite = baseSprite;
         }

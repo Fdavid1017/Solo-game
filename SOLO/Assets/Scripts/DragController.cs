@@ -21,7 +21,6 @@ public class DragController : MonoBehaviour
     DropShadow dropShadow;
     Vector3 shadowOffset = new Vector3(0f, 0f, 0.1f);
     Vector3 baseSize;
-    Vector3 sizeToShrink;
     Vector3 highliteSize = new Vector3(0.115f, 0.115f, 0.4f);
     bool isDraging = false;
 
@@ -34,7 +33,7 @@ public class DragController : MonoBehaviour
             mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.localPosition).z;
             offset = transform.localPosition - GetMouseWorldPos();
             shadowOffset = new Vector3(3f, -2.5f, 0.1f);
-            sizeToShrink = highliteSize;
+            GetComponent<Card>().scaleToShrink = highliteSize;
             GetComponent<SpriteRenderer>().sortingOrder = HIGHLIHTE_ORDER_LAYER + 1;
             isDraging = true;
         }
@@ -58,7 +57,7 @@ public class DragController : MonoBehaviour
     private void OnMouseUp()
     {
         shadowOffset = new Vector3(0f, 0f, 0.1f);
-        sizeToShrink = baseSize;
+        GetComponent<Card>().scaleToShrink = baseSize;
         GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
         isDraging = false;
 
@@ -112,7 +111,6 @@ public class DragController : MonoBehaviour
         dropShadow = GetComponent<DropShadow>();
         dropShadow.offset = new Vector3(0f, 0f, 0.1f);
         baseSize = transform.localScale;
-        sizeToShrink = baseSize;
     }
 
     private void Update()
@@ -125,11 +123,6 @@ public class DragController : MonoBehaviour
         if (dropShadow.offset != shadowOffset)
         {
             dropShadow.offset = Vector3.Lerp(dropShadow.offset, shadowOffset, 0.5f);
-        }
-
-        if (transform.localScale != sizeToShrink)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, sizeToShrink, 0.5f);
         }
     }
 }

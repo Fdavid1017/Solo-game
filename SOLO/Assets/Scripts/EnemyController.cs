@@ -21,10 +21,19 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
 
         List<GameObject> placeable = GetPlaceableCards();
-
+        Debug.Log("Placeable count: " + placeable.Count);
         if (placeable.Count == 0 || UnityEngine.Random.Range(0, 100) > 90)
         {
-            drawPackController.DrawCard(handController);
+            int drawCount = centerController.drawCount == 0 ? 1 : centerController.drawCount;
+            for (int i = 0; i < drawCount; i++)
+            {
+                drawPackController.DrawCard(handController);
+            }
+            if (centerController.drawCount != 0)
+            {
+                centerController.cardEffectUsed = true;
+                centerController.drawCount = 0;
+            }
             gameManager.DoNextTurn();
         }
         else
@@ -44,27 +53,21 @@ public class EnemyController : MonoBehaviour
 
         foreach (GameObject item in hand)
         {
-            Debug.Log("1");
             Card card = item.GetComponent<Card>();
             if (centerCard == null || card.color == CardColor.Black || card.color == centerCard.color || card.type == centerCard.type)
             {
-                Debug.Log("2");
-                if (centerCard == null || (centerCard.type != CardType.Draw_2 && centerCard.type == CardType.Draw_4))
+                if (centerCard == null || (centerCard.type != CardType.Draw_2 && centerCard.type != CardType.Draw_4))
                 {
-                    Debug.Log("3");
                     placeable.Add(item);
                 }
                 else
                 {
-                    Debug.Log("4");
                     if (centerCard.type == CardType.Draw_2 && (card.type == CardType.Draw_2 || card.type == CardType.Draw_4))
                     {
-                        Debug.Log("5");
                         placeable.Add(item);
                     }
                     if (centerCard.type == CardType.Draw_4 && card.type == CardType.Draw_4)
                     {
-                        Debug.Log("6");
                         placeable.Add(item);
                     }
                 }
