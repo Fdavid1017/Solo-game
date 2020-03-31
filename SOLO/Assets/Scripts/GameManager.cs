@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    const byte STARTING_CARD_COUNT = 2; //8
+    const byte STARTING_CARD_COUNT = 8; //8
 
     public List<GameObject> players;
     public DrawPackController drawPackController;

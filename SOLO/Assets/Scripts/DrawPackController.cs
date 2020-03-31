@@ -40,7 +40,7 @@ public class DrawPackController : MonoBehaviour
                 cards.Add(new Card(color, CardType.Skipp));
                 cards.Add(new Card(color, CardType.Switch_direction));
                 cards.Add(new Card(color, CardType.Draw_2));
-                cards.Add(new Card(color, CardType.Change_cards));
+                //  cards.Add(new Card(color, CardType.Change_cards));
             }
 
             switch (i)
@@ -61,7 +61,7 @@ public class DrawPackController : MonoBehaviour
         {
             cards.Add(new Card(CardColor.Black, CardType.Change_color));
             cards.Add(new Card(CardColor.Black, CardType.Draw_4));
-            cards.Add(new Card(CardColor.Black, CardType.Switch_cards_all));
+            //  cards.Add(new Card(CardColor.Black, CardType.Switch_cards_all));
         }
 
         int count = cards.Count;
@@ -79,43 +79,56 @@ public class DrawPackController : MonoBehaviour
     {
         if (gameManager.players[gameManager.currentPlayer].tag == "Player")
         {
-            DrawCard(playerHand);
+            DrawCard(playerHand, false);
             gameManager.DoNextTurn();
         }
     }
 
-    public void DrawCard(HandController handController)
+    public void DrawCard(HandController handController, bool ignoreDrawCount = true)
     {
-        GameObject card = GetTopCard();
+        int cardsToDraw = 1;
 
-        if (handController.tag != "Player")
+        if (!ignoreDrawCount && centerController.drawCount > 0)
         {
-            card.GetComponent<SpriteRenderer>().sprite = cardBack;
-            card.GetComponent<DragController>().isDragable = false;
+            cardsToDraw = centerController.drawCount;
+            centerController.drawCount = 0;
+            centerController.cardEffectUsed = true;
         }
 
-        card.GetComponent<DragController>().handController = handController;
-        card.GetComponent<DragController>().centerController = centerController;
-        handController.AddCardToHand(card);
-
-        if (cards.Count == 1)
+        for (int j = 0; j < cardsToDraw; j++)
         {
-            Debug.Log("Refilling draw pile");
 
-            Card lastCard = cards[0];
-            cards = centerController.AlreadyUsedCards;
+            GameObject card = GetTopCard();
 
-            int count = cards.Count;
-            int last = count - 1;
-            for (var i = 0; i < last; ++i)
+            if (handController.tag != "Player")
             {
-                int r = UnityEngine.Random.Range(i, count);
-                Card tmp = cards[i];
-                cards[i] = cards[r];
-                cards[r] = tmp;
+                card.GetComponent<SpriteRenderer>().sprite = cardBack;
+                card.GetComponent<DragController>().isDragable = false;
             }
 
-            cards.Add(lastCard);
+            card.GetComponent<DragController>().handController = handController;
+            card.GetComponent<DragController>().centerController = centerController;
+            handController.AddCardToHand(card);
+
+            if (cards.Count == 1)
+            {
+                Debug.Log("Refilling draw pile");
+
+                Card lastCard = cards[0];
+                cards = centerController.AlreadyUsedCards;
+
+                int count = cards.Count;
+                int last = count - 1;
+                for (var i = 0; i < last; ++i)
+                {
+                    int r = UnityEngine.Random.Range(i, count);
+                    Card tmp = cards[i];
+                    cards[i] = cards[r];
+                    cards[r] = tmp;
+                }
+
+                cards.Add(lastCard);
+            }
         }
     }
 

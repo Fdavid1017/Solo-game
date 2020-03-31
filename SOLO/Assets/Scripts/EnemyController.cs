@@ -51,12 +51,17 @@ public class EnemyController : MonoBehaviour
         List<GameObject> hand = handController.Cards;
         List<GameObject> placeable = new List<GameObject>();
 
+        if ((centerCard == null || centerCard.color == CardColor.Black) && centerCard.type != CardType.Draw_4)
+        {
+            return hand;
+        }
+
         foreach (GameObject item in hand)
         {
             Card card = item.GetComponent<Card>();
-            if (centerCard == null || card.color == CardColor.Black || card.color == centerCard.color || card.type == centerCard.type)
+            if (card.color == CardColor.Black || card.color == centerCard.color || card.type == centerCard.type)
             {
-                if (centerCard == null || (centerCard.type != CardType.Draw_2 && centerCard.type != CardType.Draw_4))
+                if (centerCard == null || centerController.cardEffectUsed || (centerCard.type != CardType.Draw_2 && centerCard.type != CardType.Draw_4))
                 {
                     placeable.Add(item);
                 }

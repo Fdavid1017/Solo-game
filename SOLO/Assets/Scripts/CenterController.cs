@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CenterController : MonoBehaviour
 {
+    const int MAX_PLACED_CARD = 10;
+
     private Card topCard = null;
     private HandController lastPlacer;
     private List<Card> alreadyUsedCards = new List<Card>();
+    private Queue<GameObject> placedCards = new Queue<GameObject>();
 
     [HideInInspector]
     public bool cardEffectUsed = true;
@@ -53,18 +56,37 @@ public class CenterController : MonoBehaviour
             lastPlacer = placer;
             value.RevealCard();
             value.transform.parent = transform;
-            Vector3 t;
+
             if (topCard != null)
             {
-                topCard.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                Destroy(topCard.gameObject, 2);
+                // topCard.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                int i = MAX_PLACED_CARD + 1;
+                foreach (GameObject item in placedCards)
+                {
+                    topCard.GetComponent<SpriteRenderer>().sortingOrder = -i;
+                    i--;
+                }
             }
 
             topCard = value;
-            t = transform.position;
+            Vector3 t = transform.position;
+            t.z = 0;
             topCard.GetComponent<SpriteRenderer>().sortingOrder = 2;
             topCard.GetComponent<DragController>().MoveToPosition = t;
-            topCard.transform.rotation = new Quaternion(0, 0, 0, 0);
+            topCard.GetComponent<DragController>().isDragable = false;
+            topCard.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(-20.0f, 20.0f));
+
+            if (placer != null)
+            {
+                placer.RemoveCard(topCard.gameObject);
+            }
+
+
+            if (placedCards.Count > MAX_PLACED_CARD)
+            {
+                Destroy(placedCards.Dequeue());
+            }
+
             if (placer != null)
             {
                 if (placer.Cards.Count == 0)
@@ -73,8 +95,6 @@ public class CenterController : MonoBehaviour
                     return true;
                 }
 
-                //if (!cardEffectUsed)
-                //{
                 switch (topCard.type)
                 {
                     case CardType.Skipp:
@@ -85,10 +105,6 @@ public class CenterController : MonoBehaviour
                         break;
                     case CardType.Switch_direction:
                         gameManager.roundDirection *= -1;
-                        /* Vector3 scale = directionArrows.transform.localScale;
-                         scale.x *= -1;
-                         directionArrows.transform.localScale = scale;
-                         directionArrows.GetComponent<Rotate>().speed *= -1;*/
                         directionArrows.GetComponent<Rotate>().ChangeDirection();
                         Debug.Log("Round direction changed");
                         cardEffectUsed = false;
@@ -201,15 +217,10 @@ public class CenterController : MonoBehaviour
                         gameManager.DoNextTurn();
                         break;
                 }
-                /*    cardEffectUsed = true;
-                }
-                else
-                {
-                    cardEffectUsed = true;
-                    gameManager.DoNextTurn();
-                }*/
             }
-            alreadyUsedCards.Add(topCard);
+            Card tempCard = topCard;
+            alreadyUsedCards.Add(tempCard);
+            placedCards.Enqueue(topCard.gameObject);
             return true;
         }
         return false;

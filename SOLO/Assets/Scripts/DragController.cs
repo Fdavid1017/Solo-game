@@ -74,11 +74,6 @@ public class DragController : MonoBehaviour
                 {
                     return;
                 }
-
-                handController.RemoveCard(this.gameObject);
-                moveToPosition = centerController.gameObject.transform.position;
-                transform.parent = centerController.gameObject.transform;
-                isDragable = false;
             }
         }
     }
