@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class HandController : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class HandController : MonoBehaviour
     public void RemoveCard(GameObject card)
     {
         cards.Remove(card);
+        ReorderCards();
+    }
+
+    public void ReorderCardsInList()
+    {
+        cards = cards.OrderBy(card => card.GetComponent<Card>().color).ThenBy(card => card.GetComponent<Card>().type).ToList();
         ReorderCards();
     }
 

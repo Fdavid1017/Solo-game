@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float dealingSpeed = 0.2f;
     public Sprite cardBack;
     public GameObject changeCardsUI;
+    public UIController uIController;
     [HideInInspector]
     public sbyte roundDirection = 1;
     [HideInInspector]
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseNextPlayer()
     {
         currentPlayer = GetNextPlayerIndex();
+        uIController.ChangeTrail(currentPlayer);
         Debug.Log("Current player incresed to: " + currentPlayer);
     }
 
