@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public CenterController centerController;
     public DrawPackController drawPackController;
     public GameManager gameManager;
+    public AvatarController avatarController;
 
     HandController handController;
 
@@ -41,6 +42,15 @@ public class EnemyController : MonoBehaviour
             GameObject toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
             handController.RemoveCard(toPlace);
             centerController.SetTopCard(toPlace.GetComponent<Card>(), handController);
+        }
+
+        if (handController.Cards.Count == 1)
+        {
+            avatarController.SetSoloIcon(true);
+        }
+        else
+        {
+            avatarController.SetSoloIcon(false);
         }
     }
 

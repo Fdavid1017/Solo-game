@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         //check if should say solo or said solo
         if (GameManager.isGameStarted)
         {
-            if (handController.Cards.Count <= 1)
+            if (handController.Cards.Count == 1)
             {
                 if (!soloSaid && drawIfNeeded)
                 {
