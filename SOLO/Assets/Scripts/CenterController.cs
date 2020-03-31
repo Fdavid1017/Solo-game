@@ -36,6 +36,7 @@ public class CenterController : MonoBehaviour
     {
         if (topCard == null || topCard.color == CardColor.Black || value.color == CardColor.Black || value.color == topCard.color || value.type == topCard.type)
         {
+            //Checking if previuslí placed drav card have been used or not
             if (topCard != null && !cardEffectUsed)
             {
                 if ((topCard.type == CardType.Draw_2))
@@ -53,6 +54,7 @@ public class CenterController : MonoBehaviour
                 }
             }
 
+            //setting card visual settings
             lastPlacer = placer;
             value.RevealCard();
             value.transform.parent = transform;
@@ -81,7 +83,6 @@ public class CenterController : MonoBehaviour
                 placer.RemoveCard(topCard.gameObject);
             }
 
-
             if (placedCards.Count > MAX_PLACED_CARD)
             {
                 Destroy(placedCards.Dequeue());
@@ -91,9 +92,11 @@ public class CenterController : MonoBehaviour
             {
                 if (placer.Cards.Count == 0)
                 {
+                    //Player won
                     Debug.Log(placer.name + " won the game");
                     return true;
                 }
+
 
                 switch (topCard.type)
                 {

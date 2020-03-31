@@ -11,6 +11,7 @@ public class AvatarController : MonoBehaviour
     public int playerNumber = 0;
     public GameManager gameManager;
     public TextMeshProUGUI cardNumberText;
+    public GameObject soloLogo;
 
     static List<byte> usedIndexes = new List<byte>();
 
@@ -39,5 +40,10 @@ public class AvatarController : MonoBehaviour
         {
             circleContainer.color = new Color32(255, 255, 255, 255);
         }
+    }
+
+    public void SetSoloIcon(bool state)
+    {
+        soloLogo.SetActive(state);
     }
 }

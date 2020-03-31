@@ -20,9 +20,9 @@ public class HandController : MonoBehaviour
     public void AddCardToHand(GameObject card)
     {
         card.transform.parent = transform;
-        // card.transform.localRotation = new Quaternion(0, 0, 0, 0);
         cards.Add(card);
         ReorderCards();
+        CheckSolo(false);
     }
 
     private void ReorderCards()
@@ -58,12 +58,21 @@ public class HandController : MonoBehaviour
     {
         cards.Remove(card);
         ReorderCards();
+        CheckSolo(true);
     }
 
     public void ReorderCardsInList()
     {
         cards = cards.OrderBy(card => card.GetComponent<Card>().color).ThenBy(card => card.GetComponent<Card>().type).ToList();
         ReorderCards();
+    }
+
+    void CheckSolo(bool remove)
+    {
+        if (gameObject.tag == "Player")
+        {
+            GetComponent<PlayerController>().CheckSolo(false, remove);
+        }
     }
 
     public static void ChangeHandCards(HandController hand1, HandController hand2, Sprite cardBack)

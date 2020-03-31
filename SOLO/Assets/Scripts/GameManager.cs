@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    const byte STARTING_CARD_COUNT = 8; //8
+    const byte STARTING_CARD_COUNT = 3; //8
 
     public List<GameObject> players;
     public DrawPackController drawPackController;
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int currentPlayer = -1;
 
-    static bool isGameStarted = false;
+    public static bool isGameStarted = false;
 
     // Update is called once per frame
     void Update()
@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
         if (!ConsoleController.isDevConsoleActive && !isGameStarted && Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(DealCards());
-            currentPlayer = 0;
-            isGameStarted = true;
         }
     }
 
@@ -48,6 +46,8 @@ public class GameManager : MonoBehaviour
         card.GetComponent<DragController>().MoveToPosition = centerController.gameObject.transform.position;
         card.gameObject.transform.parent = centerController.transform;
         centerController.SetTopCard(card.GetComponent<Card>(), null);
+        currentPlayer = 0;
+        isGameStarted = true;
     }
 
     public void DoNextTurn()
@@ -56,6 +56,10 @@ public class GameManager : MonoBehaviour
         if (players[currentPlayer].tag != "Player")
         {
             StartCoroutine(players[currentPlayer].GetComponent<EnemyController>().DoTurn());
+        }
+        else
+        {
+            players[currentPlayer].GetComponent<PlayerController>().CheckSolo();
         }
     }
 
