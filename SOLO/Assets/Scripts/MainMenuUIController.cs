@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUIController : MonoBehaviour
 {
@@ -60,5 +61,11 @@ public class MainMenuUIController : MonoBehaviour
     {
         ItemMouseLeave();
         settingsController.HideContainer();
+    }
+
+    public void StartNewGame(int difficulity)
+    {
+        PlayerPrefs.SetInt("difficulity", difficulity);
+        SceneManager.LoadScene(1);
     }
 }
