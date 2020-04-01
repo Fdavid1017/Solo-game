@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DragController : MonoBehaviour
 {
@@ -69,10 +70,21 @@ public class DragController : MonoBehaviour
                 && (mousePoint.y > centerController.gameObject.transform.position.y - 1.5 &&
                 mousePoint.y < centerController.gameObject.transform.position.y + 1.5))
             {
-                CenterController centerController = GameObject.FindObjectOfType<CenterController>();
-                if (!centerController.SetTopCard(gameObject.GetComponent<Card>(), handController))
+                if (Card.SelectedCards.Count == 0)
                 {
-                    return;
+                    if (!centerController.SetTopCard(gameObject.GetComponent<Card>(), handController))
+                    {
+                        Card.ClearSelectedCards();
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Card.SelectedCards.Count - 1; i++)
+                    {
+                        centerController.SetTopCard(Card.SelectedCards[i], handController, true);
+                    }
+                    centerController.SetTopCard(Card.SelectedCards[Card.SelectedCards.Count - 1], handController);
+                    Card.ClearSelectedCards();
                 }
             }
         }
@@ -91,6 +103,33 @@ public class DragController : MonoBehaviour
         if (isDragable && !isDraging)
         {
             GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1) && isDragable && gameManager.players[gameManager.currentPlayer].tag == "Player")
+        {
+            Card thisCard = GetComponent<Card>();
+            if (thisCard != null)
+            {
+                if (thisCard.isSelected)
+                {
+                    Card.RemoveCardFromSelected(thisCard);
+                    thisCard.isSelected = false;
+                }
+                else
+                {
+                    if (centerController.CheckIfCardAcceptable(thisCard))
+                    {
+                        if (Card.SelectedCards.Count == 0 || Card.SelectedCards.TrueForAll(x => x.color == thisCard.color && x.type == thisCard.type))
+                        {
+                            Card.AddCardToSelected(thisCard);
+                            thisCard.isSelected = true;
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -15,12 +15,18 @@ public enum CardType
 
 public class Card : MonoBehaviour
 {
+    static List<Card> selectedCards = new List<Card>();
+
     public CardColor color;
     public CardType type;
     public Sprite baseSprite = null;
     public Vector3 scaleToShrink;
+    [HideInInspector]
+    public bool isSelected = false;
 
     Vector3 defaultScale;
+
+    public static List<Card> SelectedCards { get => selectedCards; }
 
     public Card(CardColor color, CardType type)
     {
@@ -29,6 +35,34 @@ public class Card : MonoBehaviour
     }
 
     public Card() { }
+
+    public static void AddCardToSelected(Card card)
+    {
+        selectedCards.Add(card);
+
+        //Highlite card
+        card.GetComponent<SpriteRenderer>().color = new Color32(156, 156, 156, 255);
+    }
+
+    public static void RemoveCardFromSelected(Card card)
+    {
+        if (selectedCards.Contains(card))
+        {
+            selectedCards.Remove(card);
+
+            //Remove highlite
+            card.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
+
+    public static void ClearSelectedCards()
+    {
+        foreach (var item in selectedCards)
+        {
+            item.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        selectedCards.Clear();
+    }
 
     private void Start()
     {

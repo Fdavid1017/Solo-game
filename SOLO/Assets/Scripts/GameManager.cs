@@ -20,16 +20,7 @@ public class GameManager : MonoBehaviour
 
     public static bool isGameStarted = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!ConsoleController.isDevConsoleActive && !isGameStarted && Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(DealCards());
-        }
-    }
-
-    IEnumerator DealCards()
+    public IEnumerator DealCards()
     {
         for (int i = 0; i < players.Count; i++)
         {
@@ -52,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void DoNextTurn()
     {
+        Card.ClearSelectedCards();
         IncreaseNextPlayer();
         if (players[currentPlayer].tag != "Player")
         {

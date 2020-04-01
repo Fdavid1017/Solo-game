@@ -63,16 +63,24 @@ public class DrawPackController : MonoBehaviour
             cards.Add(new Card(CardColor.Black, CardType.Draw_4));
             //  cards.Add(new Card(CardColor.Black, CardType.Switch_cards_all));
         }
-
-        /*  int count = cards.Count;
-          int last = count - 1;
-          for (var i = 0; i < last; ++i)
-          {
-              int r = UnityEngine.Random.Range(i, count);
-              Card tmp = cards[i];
-              cards[i] = cards[r];
-              cards[r] = tmp;
-          }*/
+        int count = cards.Count;
+        int last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            int r = UnityEngine.Random.Range(i, count);
+            Card tmp = cards[i];
+            cards[i] = cards[r];
+            cards[r] = tmp;
+        }
+        cards.Add(new Card(CardColor.Red, CardType.One));
+        cards.Add(new Card(CardColor.Red, CardType.One));
+        cards.Add(new Card(CardColor.Yellow, CardType.One));
+        cards.Add(new Card(CardColor.Yellow, CardType.One));
+        cards.Add(new Card(CardColor.Green, CardType.One));
+        cards.Add(new Card(CardColor.Green, CardType.One));
+        cards.Add(new Card(CardColor.Blue, CardType.One));
+        cards.Add(new Card(CardColor.Blue, CardType.One));
+        StartCoroutine(gameManager.DealCards());
     }
 
     private void OnMouseDown()
