@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuUIController : MonoBehaviour
 {
     public GameObject horizontalLayout;
+    public SettingsController settingsController;
 
     List<GameObject> items = new List<GameObject>();
 
@@ -52,5 +53,12 @@ public class MainMenuUIController : MonoBehaviour
         {
             current.GetComponent<MenuItemController>().HideItem();
         }
+        settingsController.ShowContainer();
+    }
+
+    public void HideSetting()
+    {
+        ItemMouseLeave();
+        settingsController.HideContainer();
     }
 }
