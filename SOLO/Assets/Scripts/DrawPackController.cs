@@ -40,7 +40,7 @@ public class DrawPackController : MonoBehaviour
                 cards.Add(new Card(color, CardType.Skipp));
                 cards.Add(new Card(color, CardType.Switch_direction));
                 cards.Add(new Card(color, CardType.Draw_2));
-                //  cards.Add(new Card(color, CardType.Change_cards));
+                // cards.Add(new Card(color, CardType.Change_cards));
             }
 
             switch (i)
@@ -61,7 +61,7 @@ public class DrawPackController : MonoBehaviour
         {
             cards.Add(new Card(CardColor.Black, CardType.Change_color));
             cards.Add(new Card(CardColor.Black, CardType.Draw_4));
-            //  cards.Add(new Card(CardColor.Black, CardType.Switch_cards_all));
+            //cards.Add(new Card(CardColor.Black, CardType.Switch_cards_all));
         }
         int count = cards.Count;
         int last = count - 1;
@@ -72,14 +72,12 @@ public class DrawPackController : MonoBehaviour
             cards[i] = cards[r];
             cards[r] = tmp;
         }
-        cards.Add(new Card(CardColor.Red, CardType.One));
-        cards.Add(new Card(CardColor.Red, CardType.One));
-        cards.Add(new Card(CardColor.Yellow, CardType.One));
-        cards.Add(new Card(CardColor.Yellow, CardType.One));
-        cards.Add(new Card(CardColor.Green, CardType.One));
-        cards.Add(new Card(CardColor.Green, CardType.One));
-        cards.Add(new Card(CardColor.Blue, CardType.One));
-        cards.Add(new Card(CardColor.Blue, CardType.One));
+
+        cards.Add(new Card(CardColor.Blue, CardType.Change_cards));
+        cards.Add(new Card(CardColor.Red, CardType.Change_cards));
+        cards.Add(new Card(CardColor.Green, CardType.Change_cards));
+        cards.Add(new Card(CardColor.Yellow, CardType.Change_cards));
+
         StartCoroutine(gameManager.DealCards());
     }
 

@@ -22,7 +22,6 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
 
         List<GameObject> placeable = GetPlaceableCards();
-        Debug.Log("Placeable count: " + placeable.Count);
         if (placeable.Count == 0 || UnityEngine.Random.Range(0, 100) > 90)
         {
             int drawCount = centerController.drawCount == 0 ? 1 : centerController.drawCount;

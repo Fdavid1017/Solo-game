@@ -23,6 +23,7 @@ public class HandController : MonoBehaviour
         cards.Add(card);
         ReorderCards();
         CheckSolo(false);
+        Debug.Log(cards.Count);
     }
 
     private void ReorderCards()
@@ -59,6 +60,7 @@ public class HandController : MonoBehaviour
         cards.Remove(card);
         ReorderCards();
         CheckSolo(true);
+        Debug.Log(cards.Count);
     }
 
     public void ReorderCardsInList()
@@ -83,6 +85,7 @@ public class HandController : MonoBehaviour
 
         foreach (GameObject card in hand1.cards)
         {
+            card.transform.parent = hand1.gameObject.transform;
             if (hand1.tag == "Player")
             {
                 card.GetComponent<Card>().RevealCard();
@@ -94,10 +97,10 @@ public class HandController : MonoBehaviour
                 card.GetComponent<DragController>().isDragable = false;
             }
 
-            card.transform.parent = hand1.gameObject.transform;
         }
         foreach (GameObject card in hand2.cards)
         {
+            card.transform.parent = hand2.gameObject.transform;
             if (hand2.tag == "Player")
             {
                 card.GetComponent<Card>().RevealCard();
@@ -109,7 +112,6 @@ public class HandController : MonoBehaviour
                 card.GetComponent<DragController>().isDragable = false;
             }
 
-            card.transform.parent = hand2.gameObject.transform;
         }
 
         hand1.ReorderCards();

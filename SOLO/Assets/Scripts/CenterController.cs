@@ -60,11 +60,6 @@ public class CenterController : MonoBehaviour
             topCard.GetComponent<DragController>().isDragable = false;
             topCard.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(-20.0f, 20.0f));
 
-            if (placer != null)
-            {
-                placer.RemoveCard(topCard.gameObject);
-            }
-
             if (placedCards.Count > MAX_PLACED_CARD)
             {
                 Destroy(placedCards.Dequeue());
@@ -72,6 +67,7 @@ public class CenterController : MonoBehaviour
 
             if (placer != null)
             {
+                placer.RemoveCard(topCard.gameObject);
                 if (placer.Cards.Count == 0)
                 {
                     //Player won
@@ -84,7 +80,6 @@ public class CenterController : MonoBehaviour
                 {
                     case CardType.Skipp:
                         gameManager.IncreaseNextPlayer();
-                        Debug.Log(gameManager.players[gameManager.currentPlayer] + " skipped");
                         cardEffectUsed = false;
                         if (!dontDoNextRound)
                         {
@@ -94,7 +89,6 @@ public class CenterController : MonoBehaviour
                     case CardType.Switch_direction:
                         gameManager.roundDirection *= -1;
                         directionArrows.GetComponent<Rotate>().ChangeDirection();
-                        Debug.Log("Round direction changed");
                         cardEffectUsed = false;
                         if (!dontDoNextRound)
                         {
@@ -113,21 +107,16 @@ public class CenterController : MonoBehaviour
                             switch (playerIndex)
                             {
                                 case 0:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
                                     break;
                                 case 1:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
                                     break;
                                 case 2:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>());
+                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
                                     break;
                             }
-                            if (!dontDoNextRound)
-                            {
-                                gameManager.DoNextTurn();
-                            }
                         }
-                        Debug.Log("Changeing cards");
                         break;
                     case CardType.Switch_cards_all:
                         cardEffectUsed = false;
@@ -146,7 +135,6 @@ public class CenterController : MonoBehaviour
                             }
                         }
 
-                        Debug.Log("Changeing all cards");
                         if (!dontDoNextRound)
                         {
                             gameManager.DoNextTurn();
@@ -176,7 +164,6 @@ public class CenterController : MonoBehaviour
                             drawCount = 0;
                             cardEffectUsed = true;
                         }
-                        Debug.Log("Drawing 2");
                         if (!dontDoNextRound)
                         {
                             gameManager.DoNextTurn();
@@ -206,7 +193,6 @@ public class CenterController : MonoBehaviour
                         }
 
                         ChangeTopColor(placer, dontDoNextRound);
-                        Debug.Log("Drawing 4");
                         break;
                     case CardType.Change_color:
                         cardEffectUsed = false;
@@ -220,6 +206,10 @@ public class CenterController : MonoBehaviour
                         }
                         break;
                 }
+            }
+            else
+            {
+                Debug.Log("Placer = null");
             }
             Card tempCard = topCard;
             alreadyUsedCards.Add(tempCard);
@@ -261,7 +251,6 @@ public class CenterController : MonoBehaviour
         if (topCard.type == CardType.Change_color || topCard.type == CardType.Draw_4)
         {
             topCard.color = color;
-            Debug.Log("Changeing color to " + color);
             switch (color)
             {
                 case CardColor.Red:
@@ -332,20 +321,18 @@ public class CenterController : MonoBehaviour
     {
         if (topCard == null || topCard.color == CardColor.Black || value.color == CardColor.Black || value.color == topCard.color || value.type == topCard.type)
         {
-            //Checking if previuslí placed drav card have been used or not
+            //Checking if previusly placed drav card have been used or not
             if (topCard != null && !cardEffectUsed)
             {
                 if ((topCard.type == CardType.Draw_2))
                 {
                     if (value.type != CardType.Draw_2 && value.type != CardType.Draw_4)
                     {
-                        Debug.Log("1");
                         return false;
                     }
                 }
                 if ((topCard.type == CardType.Draw_4 && value.type != CardType.Draw_4))
                 {
-                    Debug.Log("2");
                     return false;
                 }
             }

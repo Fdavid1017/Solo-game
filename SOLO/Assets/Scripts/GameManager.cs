@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
     {
         currentPlayer = GetNextPlayerIndex();
         uIController.ChangeTrail(currentPlayer);
-        Debug.Log("Current player incresed to: " + currentPlayer);
     }
 
     public int GetNextPlayerIndex()
@@ -76,10 +75,13 @@ public class GameManager : MonoBehaviour
         return tempCurrent;
     }
 
-    public void ChangeCards(HandController hand1, HandController hand2)
+    public void ChangeCards(HandController hand1, HandController hand2,bool dontDoNextTurn=false)
     {
         HandController.ChangeHandCards(hand1, hand2, cardBack);
         changeCardsUI.SetActive(false);
-        DoNextTurn();
+        if (!dontDoNextTurn)
+        {
+            DoNextTurn(); 
+        }
     }
 }
