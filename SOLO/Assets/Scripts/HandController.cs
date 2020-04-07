@@ -23,12 +23,6 @@ public class HandController : MonoBehaviour
         cards.Add(card);
         ReorderCards();
         CheckSolo(false);
-        Debug.Log(cards.Count);
-        foreach (var item in cards)
-        {
-            Debug.Log(item.GetComponent<Card>().color + " - " + item.GetComponent<Card>().type);
-        }
-        Debug.Log("----------------------------------");
     }
 
     private void ReorderCards()
@@ -65,12 +59,6 @@ public class HandController : MonoBehaviour
         cards.Remove(card);
         ReorderCards();
         CheckSolo(true);
-        Debug.Log(cards.Count);
-        foreach (var item in cards)
-        {
-            Debug.Log(item.GetComponent<Card>().color + " - " + item.GetComponent<Card>().type);
-        }
-        Debug.Log("----------------------------------");
     }
 
     public void ReorderCardsInList()

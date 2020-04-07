@@ -28,13 +28,13 @@ public class PlayerController : MonoBehaviour
 
     public void SaySolo()
     {
-        Debug.Log(gameObject.name + " said solo");
+        ShowSoloButton(false);
         soloSaid = true;
         avatarController.SetSoloIcon(true);
-        ShowSoloButton(false);
+        Debug.Log(gameObject.name + " said solo");
     }
 
-    public void CheckSolo(bool drawIfNeeded = true,bool isCardRemoved=false)
+    public void CheckSolo(bool drawIfNeeded = true, bool isCardRemoved = false)
     {
         //check if should say solo or said solo
         if (GameManager.isGameStarted)
