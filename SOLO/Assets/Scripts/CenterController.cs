@@ -104,18 +104,7 @@ public class CenterController : MonoBehaviour
                         else
                         {
                             byte playerIndex = (byte)UnityEngine.Random.Range(0, 2);
-                            switch (playerIndex)
-                            {
-                                case 0:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
-                                    break;
-                                case 1:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
-                                    break;
-                                case 2:
-                                    gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
-                                    break;
-                            }
+                            gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
                         }
                         break;
                     case CardType.Switch_cards_all:
