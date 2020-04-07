@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CenterController : MonoBehaviour
 {
@@ -103,7 +104,7 @@ public class CenterController : MonoBehaviour
                         }
                         else
                         {
-                            byte playerIndex = (byte)UnityEngine.Random.Range(0, 2);
+                            int playerIndex = PlayerPrefs.GetInt("difficulity", 0) == 0 ? (byte)UnityEngine.Random.Range(0, 2) : gameManager.GetPlayerIndexWithTheLeastAmmountOfCard(placer.gameObject);
                             gameManager.ChangeCards(placer, gameManager.players[playerIndex].GetComponent<HandController>(), dontDoNextRound);
                         }
                         break;
@@ -217,20 +218,28 @@ public class CenterController : MonoBehaviour
         }
         else
         {
-            switch (UnityEngine.Random.Range(0, 3))
+            if (PlayerPrefs.GetInt("difficulity", 0) == 0)
             {
-                case 0:
-                    ChangeTopCardColor(CardColor.Blue, dontDoNextRound);
-                    break;
-                case 1:
-                    ChangeTopCardColor(CardColor.Green, dontDoNextRound);
-                    break;
-                case 2:
-                    ChangeTopCardColor(CardColor.Red, dontDoNextRound);
-                    break;
-                case 3:
-                    ChangeTopCardColor(CardColor.Yellow, dontDoNextRound);
-                    break;
+                switch (UnityEngine.Random.Range(0, 3))
+                {
+                    case 0:
+                        ChangeTopCardColor(CardColor.Blue, dontDoNextRound);
+                        break;
+                    case 1:
+                        ChangeTopCardColor(CardColor.Green, dontDoNextRound);
+                        break;
+                    case 2:
+                        ChangeTopCardColor(CardColor.Red, dontDoNextRound);
+                        break;
+                    case 3:
+                        ChangeTopCardColor(CardColor.Yellow, dontDoNextRound);
+                        break;
+                }
+            }
+            else
+            {
+                CardColor mostColoredCard = GetMostColor(placer);
+                ChangeTopCardColor(mostColoredCard, dontDoNextRound);
             }
         }
     }
@@ -329,5 +338,52 @@ public class CenterController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    CardColor GetMostColor(HandController hand)
+    {
+        CardColor most = CardColor.Blue;
+        int blue = 0;
+        int red = 0;
+        int green = 0;
+        int yellow = 0;
+
+        foreach (var item in hand.Cards)
+        {
+            switch (item.GetComponent<Card>().color)
+            {
+                case CardColor.Red:
+                    red++;
+                    break;
+                case CardColor.Green:
+                    green++;
+                    break;
+                case CardColor.Yellow:
+                    yellow++;
+                    break;
+                case CardColor.Blue:
+                    blue++;
+                    break;
+            }
+        }
+
+        if (blue > red && blue > green && blue > yellow)
+        {
+            most = CardColor.Blue;
+        }
+        else if (red > blue && red > green && red > yellow)
+        {
+            most = CardColor.Red;
+        }
+        else if (green > red && green > blue && green > yellow)
+        {
+            most = CardColor.Green;
+        }
+        else if (yellow > red && yellow > blue && yellow > green)
+        {
+            most = CardColor.Yellow;
+        }
+
+        return most;
     }
 }

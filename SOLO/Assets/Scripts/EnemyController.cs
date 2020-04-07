@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
 
         List<GameObject> placeable = GetPlaceableCards();
+
         if (placeable.Count == 0 || UnityEngine.Random.Range(0, 100) > 90)
         {
             int drawCount = centerController.drawCount == 0 ? 1 : centerController.drawCount;
@@ -38,11 +40,71 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            GameObject toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
+            GameObject toPlace;
+            if (PlayerPrefs.GetInt("difficulity", 0) == 0)
+            {
+                toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
+            }
+            else
+            {
+                toPlace = null;
+                Card topCard = centerController.TopCard;
+
+                List<GameObject> changeCardCards = placeable.Where(x => x.GetComponent<Card>().type == CardType.Change_cards ||
+                  x.GetComponent<Card>().type == CardType.Switch_cards_all).ToList();
+
+                List<GameObject> cardsIfNextPlayerHesLowCards = placeable.Where(x => x.GetComponent<Card>().type == CardType.Draw_2 ||
+                    x.GetComponent<Card>().type == CardType.Draw_4 || x.GetComponent<Card>().type == CardType.Switch_direction).ToList();
+
+                List<GameObject> changeColorCards = placeable.Where(x => x.GetComponent<Card>().type == CardType.Change_color).ToList();
+
+                int index = gameManager.GetPlayerIndexWithTheLeastAmmountOfCard(gameObject);
+                HandController playerWithTheLeastCard = gameManager.players[index].GetComponent<HandController>();
+
+                if (changeCardCards.Count > 0)
+                {
+                    //Has change cards
+                    if (changeCardCards.Count >= 2)
+                    {
+                        toPlace = changeCardCards[UnityEngine.Random.Range(0, changeCardCards.Count - 1)];
+                    }
+                    else if (changeCardCards.Count == placeable.Count || playerWithTheLeastCard.Cards.Count < handController.Cards.Count)
+                    {
+                        toPlace = changeCardCards[UnityEngine.Random.Range(0, changeCardCards.Count - 1)];
+                    }
+                }
+                else if (cardsIfNextPlayerHesLowCards.Count > 0)
+                {
+                    //if the player next to him in the turn direction has less than 3 card use draw 2/4, change direction or skipp player card if has one
+                    if (gameManager.players[gameManager.GetNextPlayerIndex()].GetComponent<HandController>().Cards.Count < 3)
+                    {
+                        toPlace = cardsIfNextPlayerHesLowCards[UnityEngine.Random.Range(0, cardsIfNextPlayerHesLowCards.Count - 1)];
+                    }
+                }
+                else if (changeColorCards.Count > 0)
+                {
+                    //Has change color cards
+                    List<GameObject> coloredToPlace = placeable.Where(x => x.GetComponent<Card>().color == centerController.TopCard.color).ToList();
+
+                    if (coloredToPlace.Count > 0)
+                    {
+                        toPlace = coloredToPlace[UnityEngine.Random.Range(0, coloredToPlace.Count - 1)];
+                    }
+                }
+
+                if (toPlace == null)
+                {
+                    toPlace = placeable[UnityEngine.Random.Range(0, placeable.Count - 1)];
+                }
+            }
+
+            //Placing card
             handController.RemoveCard(toPlace);
             centerController.SetTopCard(toPlace.GetComponent<Card>(), handController);
         }
 
+
+        //Setting the solo icon
         if (handController.Cards.Count == 1)
         {
             avatarController.SetSoloIcon(true);

@@ -75,13 +75,28 @@ public class GameManager : MonoBehaviour
         return tempCurrent;
     }
 
-    public void ChangeCards(HandController hand1, HandController hand2,bool dontDoNextTurn=false)
+    public void ChangeCards(HandController hand1, HandController hand2, bool dontDoNextTurn = false)
     {
         HandController.ChangeHandCards(hand1, hand2, cardBack);
         changeCardsUI.SetActive(false);
         if (!dontDoNextTurn)
         {
-            DoNextTurn(); 
+            DoNextTurn();
         }
+    }
+
+    public int GetPlayerIndexWithTheLeastAmmountOfCard(GameObject exlude)
+    {
+        int leastAmount = 0;
+
+        for (int i = 1; i < players.Count; i++)
+        {
+            if (players[i] != exlude && players[i].GetComponent<HandController>().Cards.Count < players[leastAmount].GetComponent<HandController>().Cards.Count)
+            {
+                leastAmount = i;
+            }
+        }
+
+        return leastAmount;
     }
 }
