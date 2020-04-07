@@ -9,11 +9,18 @@ public class SettingsController : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropDown;
+    public TMP_Dropdown languageDropDown;
     public GameObject container;
 
     Resolution[] resolutions;
     Vector3 baseScale;
     Vector3 scaleToShrink;
+    TextLanguageController[] textLanguageControllers;
+
+    private void Awake()
+    {
+        textLanguageControllers = Resources.FindObjectsOfTypeAll<TextLanguageController>();
+    }
 
     private void Start()
     {
@@ -79,5 +86,30 @@ public class SettingsController : MonoBehaviour
     public void HideContainer()
     {
         scaleToShrink = new Vector3(0, 0, 0);
+    }
+
+    public void ChangeLanguage(int index)
+    {
+
+        switch (index)
+        {
+            case 0:
+                TextLanguageController.ActualLanguage = Language.Hungarian;
+                break;
+            case 1:
+                TextLanguageController.ActualLanguage = Language.English;
+                break;
+        }
+
+        foreach (TextLanguageController item in textLanguageControllers)
+        {
+            item.ChangeText();
+        }
+
+        List<TMP_Dropdown.OptionData> options = languageDropDown.options;
+        options[0].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["hungarian"]);
+        options[1].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["english"]);
+
+        languageDropDown.RefreshShownValue();
     }
 }

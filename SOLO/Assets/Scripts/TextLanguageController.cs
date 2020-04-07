@@ -13,6 +13,7 @@ public enum StringFormat
     LowerCase, UpperCase, FirstLetterUpperCase, EveryFirstLetterUppercase
 }
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class TextLanguageController : MonoBehaviour
 {
     static Dictionary<Language, Dictionary<string, string>> languageMap = new Dictionary<Language, Dictionary<string, string>>()
@@ -59,15 +60,51 @@ public class TextLanguageController : MonoBehaviour
         }
     };
 
-    public Language language = Language.English;
-    public StringFormat stringFormat = StringFormat.FirstLetterUpperCase;
+    static Language actualLanguage = Language.Hungarian;
+    public static Language ActualLanguage { get => actualLanguage; set => actualLanguage = value; }
+    public static Dictionary<Language, Dictionary<string, string>> LanguageMap { get => languageMap; }
+
+    public StringFormat stringFormat = StringFormat.UpperCase;
     public string wordKey = "";
-    public TextMeshProUGUI text;
+
+    TextMeshProUGUI text;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        string setTo = languageMap[language][wordKey];
+        text = GetComponent<TextMeshProUGUI>();
+
+        ChangeText();
+    }
+
+    public static string UppercaseFirst(string s)
+    {
+        // Check for empty string.
+        if (string.IsNullOrEmpty(s))
+        {
+            return string.Empty;
+        }
+        // Return char and concat substring.
+        return char.ToUpper(s[0]) + s.Substring(1);
+    }
+
+    public static string EveryFirstLetterUppercase(string s)
+    {
+        string[] temp = s.Split(' ');
+        string full = "";
+        for (int i = 0; i < temp.Length; i++)
+        {
+            temp[i] = UppercaseFirst(temp[i]);
+            full += temp[i] + " ";
+        }
+
+        return full.Trim();
+    }
+
+    public void ChangeText()
+    {
+        string setTo = languageMap[ActualLanguage][wordKey.ToLower().Trim()];
 
         switch (stringFormat)
         {
@@ -86,29 +123,5 @@ public class TextLanguageController : MonoBehaviour
         }
 
         text.SetText(setTo.Trim());
-    }
-
-    static string UppercaseFirst(string s)
-    {
-        // Check for empty string.
-        if (string.IsNullOrEmpty(s))
-        {
-            return string.Empty;
-        }
-        // Return char and concat substring.
-        return char.ToUpper(s[0]) + s.Substring(1);
-    }
-
-    static string EveryFirstLetterUppercase(string s)
-    {
-        string[] temp = s.Split(' ');
-        string full = "";
-        for (int i = 0; i < temp.Length; i++)
-        {
-            temp[i] = UppercaseFirst(temp[i]);
-            full += temp[i] + " ";
-        }
-
-        return full.Trim();
     }
 }
