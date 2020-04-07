@@ -2841,6 +2841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 664b83eed176ce548a84fadb2a83734a, type: 2}
   resolutionDropDown: {fileID: 570842675}
+  graphicsDropDown: {fileID: 1081858424}
   languageDropDown: {fileID: 249684848}
   container: {fileID: 2059694563}
 --- !u!1 &793798698
@@ -7294,7 +7295,8 @@ MonoBehaviour:
   m_text: Option A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3cf164808ca75834aa7cde9d40d83e14, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -4919396799935646534, guid: 3cf164808ca75834aa7cde9d40d83e14,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7936,7 +7938,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 384583510}
   m_HandleRect: {fileID: 384583509}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

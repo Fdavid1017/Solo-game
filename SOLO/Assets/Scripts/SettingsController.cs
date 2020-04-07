@@ -9,6 +9,7 @@ public class SettingsController : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropDown;
+    public TMP_Dropdown graphicsDropDown;
     public TMP_Dropdown languageDropDown;
     public GameObject container;
 
@@ -47,6 +48,8 @@ public class SettingsController : MonoBehaviour
         resolutionDropDown.AddOptions(options);
         resolutionDropDown.value = currentIndex;
         resolutionDropDown.RefreshShownValue();
+
+        ChangeDropdownsLanguage();
     }
 
     private void Update()
@@ -106,10 +109,23 @@ public class SettingsController : MonoBehaviour
             item.ChangeText();
         }
 
+        ChangeDropdownsLanguage();
+    }
+
+    private void ChangeDropdownsLanguage()
+    {
         List<TMP_Dropdown.OptionData> options = languageDropDown.options;
         options[0].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["hungarian"]);
         options[1].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["english"]);
-
         languageDropDown.RefreshShownValue();
+
+        List<TMP_Dropdown.OptionData> graphicsOptions = graphicsDropDown.options;
+        graphicsOptions[0].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["very_low"]);
+        graphicsOptions[1].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["low"]);
+        graphicsOptions[2].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["medium"]);
+        graphicsOptions[3].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["high"]);
+        graphicsOptions[4].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["very_high"]);
+        graphicsOptions[5].text = TextLanguageController.UppercaseFirst(TextLanguageController.LanguageMap[TextLanguageController.ActualLanguage]["ultra"]);
+        graphicsDropDown.RefreshShownValue();
     }
 }

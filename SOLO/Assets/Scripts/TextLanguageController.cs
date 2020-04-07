@@ -32,10 +32,16 @@ public class TextLanguageController : MonoBehaviour
                 { "graphics","graphics" },
                 { "volume","volume" },
                 { "cards","cards" },
-                { "order_cards","order cards" },
+                { "order_cards","reorder cards" },
                 { "language","language" },
                 { "hungarian","hungarian" },
-                { "english","english" }
+                { "english","english" },
+                { "very_low","very low" },
+                { "low","low" },
+                { "medium","medium" },
+                { "high","high" },
+                { "very_high","very high" },
+                { "ultra","ultra" }
             }
         },
         { Language.Hungarian, new Dictionary<string, string>
@@ -55,7 +61,13 @@ public class TextLanguageController : MonoBehaviour
                 { "order_cards","kártyák rendezése" },
                 { "language","nyelv" },
                 { "hungarian","magyar" },
-                { "english","angol" }
+                { "english","angol" },
+                { "very_low","nagyon alacsony" },
+                { "low","alacsony" },
+                { "medium","közepes" },
+                { "high","magas" },
+                { "very_high","nagyon magas" },
+                { "ultra","extra" }
             }
         }
     };
