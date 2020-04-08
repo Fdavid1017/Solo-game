@@ -14,6 +14,15 @@ public class AudioController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private void Start()
+    {
+        if (Resources.FindObjectsOfTypeAll<AudioController>().Length > 1)
+        {
+            Debug.Log(Resources.FindObjectsOfTypeAll<AudioController>().Length);
+            Destroy(gameObject);
+        }
+    }
+
     public void PlayCardAudio() { cardAudio.Play(); }
     public void PlayClick() { clickAudio.Play(); }
     public void PlayEndgameAudio() { endgameAudio.Play(); }
