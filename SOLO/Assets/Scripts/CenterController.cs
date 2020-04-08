@@ -38,6 +38,8 @@ public class CenterController : MonoBehaviour
     {
         if (CheckIfCardAcceptable(value))
         {
+            GameObject.FindObjectOfType<AudioController>().PlayCardAudio();
+
             //setting card visual settings
             lastPlacer = placer;
             value.RevealCard();
@@ -74,6 +76,7 @@ public class CenterController : MonoBehaviour
                 {
                     //Player won
                     Debug.Log(placer.name + " won the game");
+                    GameObject.FindObjectOfType<AudioController>().PlayEndgameAudio();
 
                     if (placer.gameObject.tag == "Player")
                     {

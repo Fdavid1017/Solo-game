@@ -87,6 +87,8 @@ public class DrawPackController : MonoBehaviour
 
     public void DrawCard(HandController handController, bool ignoreDrawCount = true)
     {
+        GameObject.FindObjectOfType<AudioController>().PlayCardAudio();
+
         int cardsToDraw = 1;
 
         if (!ignoreDrawCount && centerController.drawCount > 0)
