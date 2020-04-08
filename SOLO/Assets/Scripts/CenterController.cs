@@ -29,6 +29,7 @@ public class CenterController : MonoBehaviour
     public GameObject changeCardsUI;
     public DrawPackController drawPackController;
     public GameObject directionArrows;
+    public UIController uIController;
 
     public Card TopCard { get => topCard; }
     public List<Card> AlreadyUsedCards { get => alreadyUsedCards; }
@@ -73,6 +74,16 @@ public class CenterController : MonoBehaviour
                 {
                     //Player won
                     Debug.Log(placer.name + " won the game");
+
+                    if (placer.gameObject.tag == "Player")
+                    {
+                        uIController.ShowWinScreen();
+                    }
+                    else
+                    {
+                        uIController.ShowLostScreen();
+                    }
+
                     return true;
                 }
 

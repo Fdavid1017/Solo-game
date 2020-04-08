@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
                     {
                         toPlace = changeCardCards[UnityEngine.Random.Range(0, changeCardCards.Count - 1)];
                     }
-                    else if (changeCardCards.Count == placeable.Count || playerWithTheLeastCard.Cards.Count < handController.Cards.Count)
+                    else if (changeCardCards.Count == placeable.Count || playerWithTheLeastCard.Cards.Count < handController.Cards.Count - 1)
                     {
                         toPlace = changeCardCards[UnityEngine.Random.Range(0, changeCardCards.Count - 1)];
                     }

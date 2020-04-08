@@ -65,10 +65,11 @@ public class DragController : MonoBehaviour
         if (isDragable && gameManager.players[gameManager.currentPlayer].tag == "Player")
         {
             Vector3 mousePoint = GetMouseWorldPos();
-            if ((mousePoint.x > centerController.gameObject.transform.position.x - 1.5 &&
-                mousePoint.x < centerController.gameObject.transform.position.x + 1.5)
-                && (mousePoint.y > centerController.gameObject.transform.position.y - 1.5 &&
-                mousePoint.y < centerController.gameObject.transform.position.y + 1.5))
+            const float distanceNextToTheCenter = 2f;
+            if ((mousePoint.x > centerController.gameObject.transform.position.x - distanceNextToTheCenter &&
+                mousePoint.x < centerController.gameObject.transform.position.x + distanceNextToTheCenter)
+                && (mousePoint.y > centerController.gameObject.transform.position.y - distanceNextToTheCenter &&
+                mousePoint.y < centerController.gameObject.transform.position.y + distanceNextToTheCenter))
             {
                 if (Card.SelectedCards.Count == 0)
                 {

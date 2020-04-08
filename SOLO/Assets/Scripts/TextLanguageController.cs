@@ -41,7 +41,11 @@ public class TextLanguageController : MonoBehaviour
                 { "medium","medium" },
                 { "high","high" },
                 { "very_high","very high" },
-                { "ultra","ultra" }
+                { "ultra","ultra" },
+                { "resume","resume" },
+                { "you_won","you won" },
+                { "you_lost","you lost" },
+                { "restart","restart" }
             }
         },
         { Language.Hungarian, new Dictionary<string, string>
@@ -67,7 +71,11 @@ public class TextLanguageController : MonoBehaviour
                 { "medium","közepes" },
                 { "high","magas" },
                 { "very_high","nagyon magas" },
-                { "ultra","extra" }
+                { "ultra","extra" },
+                { "resume","folytatás" },
+                { "you_won","nyertél" },
+                { "you_lost","vesztettél" },
+                { "restart","újrakezdés" }
             }
         }
     };
