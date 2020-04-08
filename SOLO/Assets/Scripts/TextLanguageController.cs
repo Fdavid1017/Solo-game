@@ -126,7 +126,8 @@ public class TextLanguageController : MonoBehaviour
 
     public void ChangeText()
     {
-        string setTo = languageMap[ActualLanguage][wordKey.ToLower().Trim()];
+        string setTo = string.Empty;
+        setTo = languageMap[ActualLanguage][wordKey.ToLower().Trim()];
 
         switch (stringFormat)
         {
@@ -144,6 +145,13 @@ public class TextLanguageController : MonoBehaviour
                 break;
         }
 
-        text.SetText(setTo.Trim());
+        if (text == null)
+        {
+            Debug.Log(gameObject.name + " <-- " + transform.parent.name);
+        }
+        else
+        {
+            text.SetText(setTo.Trim());
+        }
     }
 }

@@ -4189,7 +4189,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1187852643}
   - component: {fileID: 1187852644}
-  - component: {fileID: 1187852645}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -4262,19 +4261,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1187852645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1187852642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45d08f41d167c654da50aac9b271b48a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 30
 --- !u!1 &1231614971
 GameObject:
   m_ObjectHideFlags: 0
@@ -6059,6 +6045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1762328090}
   - component: {fileID: 1762328091}
+  - component: {fileID: 1762328092}
   m_Layer: 0
   m_Name: CenterSquare
   m_TagString: Untagged
@@ -6130,6 +6117,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1762328092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762328089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200a5ac841fdcce48955dbca8bd924a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 30
 --- !u!1 &1769068802
 GameObject:
   m_ObjectHideFlags: 0

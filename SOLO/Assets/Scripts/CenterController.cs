@@ -106,7 +106,7 @@ public class CenterController : MonoBehaviour
                         break;
                     case CardType.Switch_direction:
                         gameManager.roundDirection *= -1;
-                        directionArrows.GetComponent<Rotate>().ChangeDirection();
+                        directionArrows.GetComponent<RotateInPlace>().ChangeDirection();
                         cardEffectUsed = false;
                         if (!dontDoNextRound)
                         {
