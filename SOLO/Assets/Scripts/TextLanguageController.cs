@@ -45,7 +45,8 @@ public class TextLanguageController : MonoBehaviour
                 { "resume","resume" },
                 { "you_won","you won" },
                 { "you_lost","you lost" },
-                { "restart","restart" }
+                { "restart","restart" },
+                { "loading_screen_text","shuffling cards" }
             }
         },
         { Language.Hungarian, new Dictionary<string, string>
@@ -75,7 +76,8 @@ public class TextLanguageController : MonoBehaviour
                 { "resume","folytatás" },
                 { "you_won","nyertél" },
                 { "you_lost","vesztettél" },
-                { "restart","újrakezdés" }
+                { "restart","újrakezdés" },
+                { "loading_screen_text","kártyák összekeverése" }
             }
         }
     };

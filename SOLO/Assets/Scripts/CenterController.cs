@@ -45,13 +45,19 @@ public class CenterController : MonoBehaviour
             value.RevealCard();
             value.transform.parent = transform;
 
+            if (placedCards.Count + 1 > MAX_PLACED_CARD)
+            {
+                Destroy(placedCards.Dequeue());
+            }
+
+
             if (topCard != null)
             {
                 // topCard.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 int i = MAX_PLACED_CARD + 1;
                 foreach (GameObject item in placedCards)
                 {
-                    topCard.GetComponent<SpriteRenderer>().sortingOrder = -i;
+                    item.GetComponent<SpriteRenderer>().sortingOrder = -i;
                     i--;
                 }
             }
@@ -64,10 +70,7 @@ public class CenterController : MonoBehaviour
             topCard.GetComponent<DragController>().isDragable = false;
             topCard.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(-20.0f, 20.0f));
 
-            if (placedCards.Count > MAX_PLACED_CARD)
-            {
-                Destroy(placedCards.Dequeue());
-            }
+
 
             if (placer != null)
             {

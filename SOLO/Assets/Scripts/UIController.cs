@@ -30,11 +30,11 @@ public class UIController : MonoBehaviour
     }
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        GameObject.FindObjectOfType<LevelManager>().LoadLevel(0);
     }
     public void Restart()
     {
-        SceneManager.LoadScene(1);
+        GameObject.FindObjectOfType<LevelManager>().LoadLevel(1);
     }
 
     public void ShowWinScreen() { winMenu.SetActive(true); }

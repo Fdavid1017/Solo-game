@@ -7,6 +7,7 @@ public class MainMenuUIController : MonoBehaviour
 {
     public GameObject horizontalLayout;
     public SettingsController settingsController;
+    public LevelManager levelManager;
 
     List<GameObject> items = new List<GameObject>();
 
@@ -66,6 +67,7 @@ public class MainMenuUIController : MonoBehaviour
     public void StartNewGame(int difficulity)
     {
         PlayerPrefs.SetInt("difficulity", difficulity);
-        SceneManager.LoadScene(1);
+        // SceneManager.LoadScene(1);
+        levelManager.LoadLevel(1);
     }
 }

@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator DoTurn()
     {
-        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(2f, 5f));
 
         List<GameObject> placeable = GetPlaceableCards();
 
